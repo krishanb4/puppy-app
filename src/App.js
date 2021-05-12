@@ -1,7 +1,8 @@
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Navigation from "./MainNav";
-import MainHeader from "./MainHeader";
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Navigation from './MainNav';
+import MainHeader from './MainHeader';
+import Loyalty from './pages/Loyalty';
 
 function App() {
   return (

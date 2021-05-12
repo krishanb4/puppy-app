@@ -1,0 +1,3 @@
+const royaltyCollectibles = {};
+
+export {royaltyCollectibles};
