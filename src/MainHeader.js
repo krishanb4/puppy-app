@@ -1,6 +1,6 @@
-import React from "react";
-import { Navbar, Nav } from "react-bootstrap";
-import logo from "./images/main.png";
+import React from 'react';
+import {Navbar, Nav} from 'react-bootstrap';
+import logo from './images/main.png';
 
 function MainHeader() {
   return (
