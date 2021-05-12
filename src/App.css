@@ -1,6 +1,6 @@
 .App {
     text-align: center;
-    background-image: linear-gradient(to right top, #f35c4d, #e96b4c, #de774f, #d48154, #ca8a5d, #cb966a, #cca279, #cdad89, #d8c0a0, #e4d3b7, #f1e6d0, #fff9e9);
+    background-image: linear-gradient(to right top, #051937, #004f79, #008b8d, #00c366, #d8eb12);
 }
 
 .main-header {
@@ -10,6 +10,16 @@
     justify-content: space-between;
     padding-top: .5rem;
     padding-bottom: .5rem;
+}
+
+.puppy-head h1 {
+    color: #fff;
+    font-size: 70px;
+}
+
+.puppy-head p {
+    color: #fff;
+    font-size: 20px;
 }
 
 .btn-wallet-connect {
