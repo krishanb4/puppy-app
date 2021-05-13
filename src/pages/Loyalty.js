@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {Container, Row, Col, Button, Card, Modal} from 'react-bootstrap';
 import logo from '.././images/main.png';
@@ -14,6 +15,7 @@ import {
 import {loyaltyCollectibles} from '../constants/constants';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+
 
 class Loyalty extends React.Component {
   constructor(props) {
@@ -143,7 +145,7 @@ class Loyalty extends React.Component {
     const responsive = {
       superLargeDesktop: {
         // the naming can be any, depends on you.
-        breakpoint: {max: 4000, min: 3000},
+        breakpoint: { max: 4000, min: 3000 },
         items: 5,
       },
       desktop: {
@@ -151,11 +153,11 @@ class Loyalty extends React.Component {
         items: 1,
       },
       tablet: {
-        breakpoint: {max: 1024, min: 464},
+        breakpoint: { max: 1024, min: 464 },
         items: 2,
       },
       mobile: {
-        breakpoint: {max: 464, min: 0},
+        breakpoint: { max: 464, min: 0 },
         items: 1,
       },
     };
@@ -179,7 +181,7 @@ class Loyalty extends React.Component {
         <Row>
           <Col></Col>
           <Col sm>
-            <Card style={{width: '18rem'}} className="bg-dark text-white">
+            <Card style={{ width: "18rem" }} className="bg-dark text-white">
               <Card.Body>
                 <Card.Title>PUPPY Balance</Card.Title>
                 <h4>{this.state.balance}</h4>
@@ -187,7 +189,7 @@ class Loyalty extends React.Component {
             </Card>
           </Col>
           <Col sm>
-            <Card style={{width: '18rem'}} className="bg-dark text-white">
+            <Card style={{ width: "18rem" }} className="bg-dark text-white">
               <Card.Body>
                 <Card.Title>Current Loyalty Level</Card.Title>
                 <h4>{this.state.level}</h4>
