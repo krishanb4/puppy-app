@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {Container, Row, Col, Button, Card} from 'react-bootstrap';
+import {Container, Row, Col, Button, Card, Modal} from 'react-bootstrap';
 import logo from '.././images/main.png';
 import puppy from '../puppy.png';
 import {generateItem} from '../functions/pinataFunc';
@@ -10,7 +10,9 @@ import {
   checkBalance,
   puppyBalance,
   aquiredNFTs,
+  waitForTx,
 } from '../functions/ethFunc';
+import {loyaltyCollectibles} from '../constants/constants';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -19,9 +21,8 @@ class Loyalty extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
-      balance: 100.24,
-      level: 1,
+      balance: 0.0,
+      level: 0,
       claims: [
         {id: 1, claimed: false},
         {id: 2, claimed: false},
@@ -30,6 +31,7 @@ class Loyalty extends React.Component {
         {id: 5, claimed: false},
         {id: 6, claimed: false},
       ],
+      minting: false,
     };
     this.checkLevel = this.checkLevel.bind(this);
     this.generate = this.generate.bind(this);
@@ -43,10 +45,26 @@ class Loyalty extends React.Component {
 
   async generate(id) {
     console.log(id);
+    this.setState({minting: true});
     const ipfs_res = await generateItem(id, '', '', '', '');
     const hash = ipfs_res.IpfsHash;
-    await mint(`https://ipfs.io/ipfs/${hash}`, id);
-    console.log(hash);
+    const txHash = await mint(`https://ipfs.io/ipfs/${hash}`, id);
+    const status = await waitForTx(txHash);
+    if (status == true) {
+      aquiredNFTs(window.currentAccount).then((data) => {
+        var newClaims = [];
+        for (var i = 1; i < 7; i++) {
+          newClaims.push({
+            id: i,
+            claimed: data[`${i}`],
+          });
+
+          this.setState({claims: newClaims});
+        }
+      });
+    }
+
+    this.setState({minting: false});
   }
   async componentDidMount() {
     connect().then((dat) => {
@@ -75,7 +93,7 @@ class Loyalty extends React.Component {
       if (!value.claimed) {
         if (value.id > this.state.level) {
           return (
-            <Col>
+            <Col key={key}>
               <Button variant="outline-light" disabled>
                 Level not reached!
               </Button>
@@ -83,7 +101,7 @@ class Loyalty extends React.Component {
           );
         } else {
           return (
-            <Col>
+            <Col key={key}>
               <Button
                 variant="outline-light"
                 onClick={() => this.generate(value.id)}
@@ -95,7 +113,7 @@ class Loyalty extends React.Component {
         }
       } else {
         return (
-          <Col>
+          <Col key={key}>
             <Button variant="outline-light" disabled>
               Level {value.id} NFT already claimed!
             </Button>
@@ -103,6 +121,27 @@ class Loyalty extends React.Component {
         );
       }
     });
+
+    const items = this.state.claims.map((value, key) => {
+      if (value.claimed) {
+        return (
+          <Card
+            style={{width: '18rem'}}
+            className="mx-auto bg-dark puppy-head"
+            key={key}
+          >
+            <Card.Img variant="top" src={loyaltyCollectibles[value.id].image} />
+            <Card.Body>
+              <Card.Title>
+                <h3>{loyaltyCollectibles[value.id].name}</h3>
+              </Card.Title>
+              <Card.Text>{loyaltyCollectibles[value.id].description}</Card.Text>
+            </Card.Body>
+          </Card>
+        );
+      }
+    });
+
     const responsive = {
       superLargeDesktop: {
         // the naming can be any, depends on you.
@@ -110,8 +149,8 @@ class Loyalty extends React.Component {
         items: 5,
       },
       desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 4,
+        breakpoint: {max: 3000, min: 1024},
+        items: 1,
       },
       tablet: {
         breakpoint: { max: 1024, min: 464 },
@@ -122,12 +161,16 @@ class Loyalty extends React.Component {
         items: 1,
       },
     };
-    for (var i = 0; i < 5; i++) {
-      this.state.items.push(<img width={100} className="mr-3" src={puppy} />);
-    }
 
     return (
       <div className="sm puppy-head">
+        <Modal show={this.state.minting} backdrop="static" keyboard={false}>
+          <Modal.Header>
+            <Modal.Title>A collectible is mining!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Wait for your collectible to mint!</Modal.Body>
+          <Modal.Footer></Modal.Footer>
+        </Modal>
         <Row>{buttons}</Row>
         <h3>What is Loyalty?</h3>
         <p>
@@ -154,10 +197,10 @@ class Loyalty extends React.Component {
             </Card>
           </Col>
           <Col></Col>
-          <Col sm>
-            <h3>Collected</h3>
-            <Carousel responsive={responsive}>{this.state.items}</Carousel>
-          </Col>
+        </Row>
+        <Row>
+          <h3>Collected</h3>
+          <Carousel responsive={responsive}>{items}</Carousel>
         </Row>
       </div>
     );
