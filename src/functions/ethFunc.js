@@ -76,6 +76,11 @@ async function mint(tokenURI, tokenId) {
   return tx.hash;
 }
 
+async function waitForTx(tx) {
+  const result = await window.provider.waitForTransaction(tx);
+  return result.status;
+}
+
 window.ethereum.on('accountsChanged', function (accounts) {
   // Time to reload your interface with accounts[0]!
   window.location.reload();
@@ -84,4 +89,4 @@ window.ethereum.on('networkChanged', function (accounts) {
   // Time to reload your interface with accounts[0]!
   window.location.reload();
 });
-export {mint, connect, checkBalance, puppyBalance, aquiredNFTs};
+export {mint, connect, checkBalance, puppyBalance, aquiredNFTs, waitForTx};
