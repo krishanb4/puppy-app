@@ -1,10 +1,10 @@
-import React from 'react';
-import {Container, Row, Col, Button, Card} from 'react-bootstrap';
-import logo from '.././images/main.png';
-import puppy from '../puppy.png';
-import {generateItem} from '../functions/pinataFunc';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import React from "react";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import logo from ".././images/main.png";
+import puppy from "../puppy.png";
+import { generateItem } from "../functions/pinataFunc";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 class Loyalty extends React.Component {
   constructor(props) {
@@ -20,13 +20,13 @@ class Loyalty extends React.Component {
 
   async checkLevel() {
     const level = 4;
-    this.setState({level: this.state.level + 1});
+    this.setState({ level: this.state.level + 1 });
     return level;
   }
 
   async generate() {
     const level = await this.checkLevel();
-    const ipfs_res = await generateItem(level, '', '', '', '');
+    const ipfs_res = await generateItem(level, "", "", "", "");
     const hash = ipfs_res.IpfsHash;
     console.log(hash);
   }
@@ -38,19 +38,19 @@ class Loyalty extends React.Component {
     const responsive = {
       superLargeDesktop: {
         // the naming can be any, depends on you.
-        breakpoint: {max: 4000, min: 3000},
+        breakpoint: { max: 4000, min: 3000 },
         items: 5,
       },
       desktop: {
-        breakpoint: {max: 3000, min: 1024},
+        breakpoint: { max: 3000, min: 1024 },
         items: 4,
       },
       tablet: {
-        breakpoint: {max: 1024, min: 464},
+        breakpoint: { max: 1024, min: 464 },
         items: 2,
       },
       mobile: {
-        breakpoint: {max: 464, min: 0},
+        breakpoint: { max: 464, min: 0 },
         items: 1,
       },
     };
@@ -75,7 +75,7 @@ class Loyalty extends React.Component {
         <Row>
           <Col></Col>
           <Col sm>
-            <Card style={{width: '18rem'}} className="bg-dark text-white">
+            <Card style={{ width: "18rem" }} className="bg-dark text-white">
               <Card.Body>
                 <Card.Title>PUPPY Balance</Card.Title>
                 <h4>{this.state.balance}</h4>
@@ -83,7 +83,7 @@ class Loyalty extends React.Component {
             </Card>
           </Col>
           <Col sm>
-            <Card style={{width: '18rem'}} className="bg-dark text-white">
+            <Card style={{ width: "18rem" }} className="bg-dark text-white">
               <Card.Body>
                 <Card.Title>Current Loyalty Level</Card.Title>
                 <h4>{this.state.level}</h4>
