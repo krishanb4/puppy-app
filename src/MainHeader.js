@@ -20,7 +20,7 @@ function MainHeader() {
         <div className="main-header row">
           <div className="col-md-8 puppy-head">
             <h1 className="mb-3">
-              PuppyWorld, the next level of NFT marketplace
+              PuppyWorld, the next level of NFT Marketplace
             </h1>
             <p>
               Puppyworld Finance is a next-generation decentralized NFT yield
