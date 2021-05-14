@@ -32,7 +32,7 @@ class Navigation extends React.Component {
             </Link>
           </Nav>
           <div>
-            <Nav.Link className="btn-wallet-connect">Connect</Nav.Link>
+            {/*<Nav.Link className="btn-wallet-connect">Connect</Nav.Link> */}
           </div>
         </Navbar>
       </>
