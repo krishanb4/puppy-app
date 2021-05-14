@@ -43,7 +43,7 @@ const loyaltyCollectibles = {
       'https://gateway.pinata.cloud/ipfs/QmbrHNccNLcq8RqLvSuLPCazcojWW3aRjKVhPgYi6JysgL',
   },
 };
-const minterAddress = '0x8EF3111271599f7017d104Da20043B987B32Bb1d';
+const minterAddress = '0x812541A20DF9AE20cF2930F418C8B486edbF368e';
 const puppyAddress = '0xEc6043A64C8eAAbe731Db739e909F0d5254B1392';
 
 export {loyaltyCollectibles, minterAddress, puppyAddress};

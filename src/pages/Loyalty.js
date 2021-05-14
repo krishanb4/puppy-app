@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {Container, Row, Col, Button, Card, Modal} from 'react-bootstrap';
 import logo from '.././images/main.png';
@@ -15,7 +14,6 @@ import {
 import {loyaltyCollectibles} from '../constants/constants';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-
 
 class Loyalty extends React.Component {
   constructor(props) {
@@ -46,9 +44,9 @@ class Loyalty extends React.Component {
   async generate(id) {
     console.log(id);
     this.setState({minting: true});
-    const ipfs_res = await generateItem(id, '', '', '', '');
-    const hash = ipfs_res.IpfsHash;
-    const txHash = await mint(`https://ipfs.io/ipfs/${hash}`, id);
+    //const ipfs_res = await generateItem(id, '', '', '', '');
+    //const hash = ipfs_res.IpfsHash;
+    const txHash = await mint(id);
     const status = await waitForTx(txHash);
     if (status == true) {
       aquiredNFTs(window.currentAccount).then((data) => {
@@ -145,7 +143,7 @@ class Loyalty extends React.Component {
     const responsive = {
       superLargeDesktop: {
         // the naming can be any, depends on you.
-        breakpoint: { max: 4000, min: 3000 },
+        breakpoint: {max: 4000, min: 3000},
         items: 5,
       },
       desktop: {
@@ -153,11 +151,11 @@ class Loyalty extends React.Component {
         items: 1,
       },
       tablet: {
-        breakpoint: { max: 1024, min: 464 },
+        breakpoint: {max: 1024, min: 464},
         items: 2,
       },
       mobile: {
-        breakpoint: { max: 464, min: 0 },
+        breakpoint: {max: 464, min: 0},
         items: 1,
       },
     };
@@ -173,7 +171,7 @@ class Loyalty extends React.Component {
         </Modal>
         <Row>{buttons}</Row>
         <h3>What is Loyalty?</h3>
-        <p>
+        <p className="mx-auto">
           There are levels to all PUPPY Holders. You can claim NFTs matching
           your level!
         </p>
@@ -181,7 +179,7 @@ class Loyalty extends React.Component {
         <Row>
           <Col></Col>
           <Col sm>
-            <Card style={{ width: "18rem" }} className="bg-dark text-white">
+            <Card style={{width: '18rem'}} className="bg-dark text-white">
               <Card.Body>
                 <Card.Title>PUPPY Balance</Card.Title>
                 <h4>{this.state.balance}</h4>
@@ -189,7 +187,7 @@ class Loyalty extends React.Component {
             </Card>
           </Col>
           <Col sm>
-            <Card style={{ width: "18rem" }} className="bg-dark text-white">
+            <Card style={{width: '18rem'}} className="bg-dark text-white">
               <Card.Body>
                 <Card.Title>Current Loyalty Level</Card.Title>
                 <h4>{this.state.level}</h4>
