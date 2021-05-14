@@ -27,7 +27,7 @@ class Navigation extends React.Component {
               NFT Marketplace
             </Link>
 
-            <Link to="/nft" className="nav-link">
+            <Link to="/loyalty" className="nav-link">
               Loyalty
             </Link>
           </Nav>

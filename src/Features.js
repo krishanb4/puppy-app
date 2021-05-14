@@ -6,7 +6,7 @@ function Features() {
     <>
       <MainNav />
       <div className="container">
-        <h1>Coming Soon! Stay tuned</h1>
+        <h1 className="coming-soon-head">Coming Soon! Stay tuned</h1>
       </div>
     </>
   );
