@@ -21,7 +21,7 @@ function MainHeader() {
         <div className="main-header row">
           <div className="col-md-8 puppy-head">
             <h1 className="mb-3">
-              The Puppy store , Next level of NFT marketplace
+              Puppy World, the next level of NFT marketplace
             </h1>
             <p>
               Puppy Finance is a next-generation decentralized NFT yield farming
@@ -72,7 +72,7 @@ function MainHeader() {
                     className="icon-sequence"
                   />
                 </div>
-                <h4 className="heading-sequence">Yeild optimized farm</h4>
+                <h4 className="heading-sequence">Yield optimization farm</h4>
               </div>
 
               <div
@@ -103,7 +103,7 @@ function MainHeader() {
                     className="icon-sequence"
                   />
                 </div>
-                <h4 className="heading-sequence">Loyality program</h4>
+                <h4 className="heading-sequence">Loyalty program</h4>
               </div>
             </div>
           </div>
@@ -111,13 +111,12 @@ function MainHeader() {
         <div className="nft-section">
           <h2 className="heading headingblue opacity-cards">NFT Marketplace</h2>
           <p>
-            Those who buy Puppy’s native token PUPPY will be able to claim
-            Puppy’s NFTs same time with a first-time free claiming chance
+            Those who buy Puppy’s native token(PUPPY) will be able to claim
+            Puppy’s NFTs same time with a first-time free claiming opportunity
             through our platform. Users will be fallen under different Tiers
             that are introduced by the platform according to the amount of PUPPY
             they bought. The type and amount of NFTs that you receive will
-            depend on your tier. The more the tokens bought higher the NFT
-            reward.
+            depend on your tier. More the tokens bought,higher the NFT reward.
           </p>
         </div>
         <div className="tokenomics">
@@ -141,7 +140,7 @@ function MainHeader() {
                     className="icon-sequence"
                   />
                 </div>
-                <h4 className="heading-sequence">45% Public/Private Sale</h4>
+                <h4 className="heading-sequence">45% Public,Private Sale</h4>
               </div>
 
               <div
