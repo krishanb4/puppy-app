@@ -1,7 +1,15 @@
 import React from "react";
+import MainNav from "./MainNav";
 
 function Features() {
-  return <h1>Hello features</h1>;
+  return (
+    <>
+      <MainNav />
+      <div className="container">
+        <h1>Coming Soon! Stay tuned</h1>
+      </div>
+    </>
+  );
 }
 
 export default Features;
