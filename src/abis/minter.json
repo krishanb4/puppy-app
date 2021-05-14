@@ -20,6 +20,17 @@
   },
   {
     "inputs": [
+      {"internalType": "address", "name": "_account", "type": "address"},
+      {"internalType": "uint256", "name": "token_id", "type": "uint256"},
+      {"internalType": "uint256", "name": "_amount", "type": "uint256"}
+    ],
+    "name": "claimReward",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {"internalType": "uint256", "name": "", "type": "uint256"},
       {"internalType": "address", "name": "", "type": "address"}
     ],
@@ -92,12 +103,44 @@
   },
   {
     "inputs": [
-      {"internalType": "string", "name": "_tokenURI", "type": "string"},
       {"internalType": "uint256", "name": "token_id", "type": "uint256"},
       {"internalType": "bytes", "name": "data", "type": "bytes"}
     ],
     "name": "mintLevel",
     "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+    "name": "minted",
+    "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"internalType": "address", "name": "", "type": "address"},
+      {"internalType": "address", "name": "", "type": "address"},
+      {"internalType": "uint256[]", "name": "", "type": "uint256[]"},
+      {"internalType": "uint256[]", "name": "", "type": "uint256[]"},
+      {"internalType": "bytes", "name": "", "type": "bytes"}
+    ],
+    "name": "onERC1155BatchReceived",
+    "outputs": [{"internalType": "bytes4", "name": "", "type": "bytes4"}],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"internalType": "address", "name": "", "type": "address"},
+      {"internalType": "address", "name": "", "type": "address"},
+      {"internalType": "uint256", "name": "", "type": "uint256"},
+      {"internalType": "uint256", "name": "", "type": "uint256"},
+      {"internalType": "bytes", "name": "", "type": "bytes"}
+    ],
+    "name": "onERC1155Received",
+    "outputs": [{"internalType": "bytes4", "name": "", "type": "bytes4"}],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -113,6 +156,13 @@
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rewardDistributer",
+    "outputs": [{"internalType": "address", "name": "", "type": "address"}],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -142,15 +192,54 @@
     "inputs": [
       {"internalType": "address", "name": "_address", "type": "address"}
     ],
+    "name": "setRewardDistributer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"internalType": "address", "name": "_address", "type": "address"}
+    ],
     "name": "setToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "inputs": [
+      {"internalType": "string", "name": "_lvl1", "type": "string"},
+      {"internalType": "string", "name": "_lvl2", "type": "string"},
+      {"internalType": "string", "name": "_lvl3", "type": "string"},
+      {"internalType": "string", "name": "_lvl4", "type": "string"},
+      {"internalType": "string", "name": "_lvl5", "type": "string"},
+      {"internalType": "string", "name": "_lvl6", "type": "string"}
+    ],
+    "name": "setTokenURI",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"internalType": "bytes4", "name": "interfaceId", "type": "bytes4"}
+    ],
+    "name": "supportsInterface",
+    "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "token",
     "outputs": [{"internalType": "address", "name": "", "type": "address"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+    "name": "token_uri",
+    "outputs": [{"internalType": "string", "name": "", "type": "string"}],
     "stateMutability": "view",
     "type": "function"
   },

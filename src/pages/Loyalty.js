@@ -1,8 +1,8 @@
-import React from "react";
-import { Container, Row, Col, Button, Card, Modal } from "react-bootstrap";
-import logo from ".././images/main.png";
-import puppy from "../puppy.png";
-import { generateItem } from "../functions/pinataFunc";
+import React from 'react';
+import {Container, Row, Col, Button, Card, Modal} from 'react-bootstrap';
+import logo from '.././images/main.png';
+import puppy from '../puppy.png';
+import {generateItem} from '../functions/pinataFunc';
 import {
   mint,
   connect,
@@ -10,11 +10,10 @@ import {
   puppyBalance,
   aquiredNFTs,
   waitForTx,
-} from "../functions/ethFunc";
-import Navigation from "../MainNav";
-import { loyaltyCollectibles } from "../constants/constants";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
+} from '../functions/ethFunc';
+import {loyaltyCollectibles} from '../constants/constants';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 class Loyalty extends React.Component {
   constructor(props) {
@@ -23,12 +22,12 @@ class Loyalty extends React.Component {
       balance: 0.0,
       level: 0,
       claims: [
-        { id: 1, claimed: false },
-        { id: 2, claimed: false },
-        { id: 3, claimed: false },
-        { id: 4, claimed: false },
-        { id: 5, claimed: false },
-        { id: 6, claimed: false },
+        {id: 1, claimed: false},
+        {id: 2, claimed: false},
+        {id: 3, claimed: false},
+        {id: 4, claimed: false},
+        {id: 5, claimed: false},
+        {id: 6, claimed: false},
       ],
       minting: false,
     };
@@ -38,18 +37,18 @@ class Loyalty extends React.Component {
 
   async checkLevel() {
     const level = 1;
-    // this.setState({level: level});
+    //this.setState({level: level});
     return level;
   }
 
   async generate(id) {
     console.log(id);
-    this.setState({ minting: true });
-    const ipfs_res = await generateItem(id, "", "", "", "");
-    const hash = ipfs_res.IpfsHash;
-    const txHash = await mint(`https://ipfs.io/ipfs/${hash}`, id);
+    this.setState({minting: true});
+    //const ipfs_res = await generateItem(id, '', '', '', '');
+    //const hash = ipfs_res.IpfsHash;
+    const txHash = await mint(id);
     const status = await waitForTx(txHash);
-    if (status === true) {
+    if (status == true) {
       aquiredNFTs(window.currentAccount).then((data) => {
         var newClaims = [];
         for (var i = 1; i < 7; i++) {
@@ -58,19 +57,19 @@ class Loyalty extends React.Component {
             claimed: data[`${i}`],
           });
 
-          this.setState({ claims: newClaims });
+          this.setState({claims: newClaims});
         }
       });
     }
 
-    this.setState({ minting: false });
+    this.setState({minting: false});
   }
   async componentDidMount() {
     connect().then((dat) => {
       //this.checkLevel();
       puppyBalance(window.currentAccount).then((data) => {
-        this.setState({ balance: Number(data[0]).toFixed(3) });
-        this.setState({ level: data[1] });
+        this.setState({balance: Number(data[0]).toFixed(3)});
+        this.setState({level: data[1]});
       });
 
       aquiredNFTs(window.currentAccount).then((data) => {
@@ -81,7 +80,7 @@ class Loyalty extends React.Component {
             claimed: data[`${i}`],
           });
 
-          this.setState({ claims: newClaims });
+          this.setState({claims: newClaims});
         }
       });
     });
@@ -125,7 +124,7 @@ class Loyalty extends React.Component {
       if (value.claimed) {
         return (
           <Card
-            style={{ width: "18rem" }}
+            style={{width: '18rem'}}
             className="mx-auto bg-dark puppy-head"
             key={key}
           >
@@ -144,67 +143,64 @@ class Loyalty extends React.Component {
     const responsive = {
       superLargeDesktop: {
         // the naming can be any, depends on you.
-        breakpoint: { max: 4000, min: 3000 },
+        breakpoint: {max: 4000, min: 3000},
         items: 5,
       },
       desktop: {
-        breakpoint: { max: 3000, min: 1024 },
+        breakpoint: {max: 3000, min: 1024},
         items: 1,
       },
       tablet: {
-        breakpoint: { max: 1024, min: 464 },
+        breakpoint: {max: 1024, min: 464},
         items: 2,
       },
       mobile: {
-        breakpoint: { max: 464, min: 0 },
+        breakpoint: {max: 464, min: 0},
         items: 1,
       },
     };
 
     return (
-      <>
-        <Navigation />
-        <div className="sm puppy-head">
-          <Modal show={this.state.minting} backdrop="static" keyboard={false}>
-            <Modal.Header>
-              <Modal.Title>A collectible is mining!</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Wait for your collectible to mint!</Modal.Body>
-            <Modal.Footer></Modal.Footer>
-          </Modal>
-          <Row>{buttons}</Row>
-          <h3>What is Loyalty?</h3>
-          <p>
-            There are levels to all PUPPY Holders. You can claim NFTs matching
-            your level!
-          </p>
+      <div className="sm puppy-head">
+        <Modal show={this.state.minting} backdrop="static" keyboard={false}>
+          <Modal.Header>
+            <Modal.Title>A collectible is mining!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Wait for your collectible to mint!</Modal.Body>
+          <Modal.Footer></Modal.Footer>
+        </Modal>
+        <Row>{buttons}</Row>
+        <h3>What is Loyalty?</h3>
+        <p className="mx-auto">
+          There are levels to all PUPPY Holders. You can claim NFTs matching
+          your level!
+        </p>
 
-          <Row>
-            <Col></Col>
-            <Col sm>
-              <Card style={{ width: "18rem" }} className="bg-dark text-white">
-                <Card.Body>
-                  <Card.Title>PUPPY Balance</Card.Title>
-                  <h4>{this.state.balance}</h4>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col sm>
-              <Card style={{ width: "18rem" }} className="bg-dark text-white">
-                <Card.Body>
-                  <Card.Title>Current Loyalty Level</Card.Title>
-                  <h4>{this.state.level}</h4>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col></Col>
-          </Row>
-          <Row>
-            <h3>Collected</h3>
-            <Carousel responsive={responsive}>{items}</Carousel>
-          </Row>
-        </div>
-      </>
+        <Row>
+          <Col></Col>
+          <Col sm>
+            <Card style={{width: '18rem'}} className="bg-dark text-white">
+              <Card.Body>
+                <Card.Title>PUPPY Balance</Card.Title>
+                <h4>{this.state.balance}</h4>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col sm>
+            <Card style={{width: '18rem'}} className="bg-dark text-white">
+              <Card.Body>
+                <Card.Title>Current Loyalty Level</Card.Title>
+                <h4>{this.state.level}</h4>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col></Col>
+        </Row>
+        <Row>
+          <h3>Collected</h3>
+          <Carousel responsive={responsive}>{items}</Carousel>
+        </Row>
+      </div>
     );
   }
 }
