@@ -2,6 +2,7 @@ import React from "react";
 import logo from "./puppy.png";
 import { Navbar, Nav } from "react-bootstrap";
 import connect from "./waletconnect/web3connect";
+import { Link } from "react-router-dom";
 
 class Navigation extends React.Component {
   render() {
@@ -18,9 +19,17 @@ class Navigation extends React.Component {
             PuppyWorld Finance
           </Navbar.Brand>
           <Nav>
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/nft">NFT Marketplace</Nav.Link>
-            <Nav.Link href="/loyalty">Loyalty</Nav.Link>
+            <Link to="/" className="nav-link">
+              Home
+            </Link>
+
+            <Link to="/nft" className="nav-link">
+              NFT Marketplace
+            </Link>
+
+            <Link to="/nft" className="nav-link">
+              Loyalty
+            </Link>
           </Nav>
           <div>
             <Nav.Link className="btn-wallet-connect">Connect</Nav.Link>

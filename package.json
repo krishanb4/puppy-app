@@ -10,8 +10,8 @@
         "@testing-library/user-event": "^12.1.10",
         "@walletconnect/web3-provider": "^1.4.1",
         "bootstrap": "^5.0.0",
-        "lodash": "^4.17.21",
         "ethers": "^5.1.4",
+        "lodash": "^4.17.21",
         "react": "^17.0.2",
         "react-bootstrap": "^1.6.0",
         "react-dom": "^17.0.2",
@@ -46,5 +46,8 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "@types/react-router-dom": "^5.1.7"
     }
 }

@@ -4,20 +4,33 @@ import Features from "./Features";
 import Home from "./pages/Home";
 import Loyalty from "./pages/Loyalty";
 import GenericNotFound from "./pages/GenericNotFound";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  HashRouter,
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 function App() {
   return (
-    <Router>
+    <HashRouter>
       <div className="App">
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/nft" component={Features} />
-          <Route path="/loyalty" component={Features} />
-          <Route component={GenericNotFound} />
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/nft">
+            <Features />
+          </Route>
+          <Route path="/loyalty">
+            <Features />
+          </Route>
+          <Route>
+            <GenericNotFound />
+          </Route>
         </Switch>
       </div>
-    </Router>
+    </HashRouter>
   );
 }
 
