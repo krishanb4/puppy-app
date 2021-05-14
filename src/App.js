@@ -2,14 +2,8 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Features from "./Features";
 import Home from "./pages/Home";
-import Loyalty from "./pages/Loyalty";
 import GenericNotFound from "./pages/GenericNotFound";
-import {
-  HashRouter,
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { HashRouter, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
