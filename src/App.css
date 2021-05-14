@@ -1,11 +1,11 @@
         @font-face {
             font-family: 'MyFont';
-            src: local('MyFont'), url(./fonts/AustieBostKittenKlub.ttf) format('tff');
+            src: local('MyFont'), url(./fonts/WinterCat-vmymD.woff) format('woff');
         }
         
         .App {
             text-align: center;
-            background-image: url("images/back4.png");
+            background-image: url("images/back.png");
             background-repeat: inherit;
         }
         
@@ -41,6 +41,14 @@
             line-height: inherit;
             white-space: nowrap;
             color: white;
+            font-family: 'MyFont', sans-serif;
+        }
+        
+        .coming-soon-head {
+            color: #fff;
+            margin-top: 200px;
+            padding-bottom: 400px;
+            font-size: 7vw;
         }
         
         .social-btns {

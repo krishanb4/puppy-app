@@ -1,5 +1,4 @@
 import React from "react";
-import { Navbar, Nav } from "react-bootstrap";
 import logo from "./images/main.png";
 import logo1 from "./images/1.png";
 import logo2 from "./images/2.png";
@@ -21,14 +20,15 @@ function MainHeader() {
         <div className="main-header row">
           <div className="col-md-8 puppy-head">
             <h1 className="mb-3">
-              Puppy World, the next level of NFT marketplace
+              PuppyWorld, the next level of NFT marketplace
             </h1>
             <p>
-              Puppy Finance is a next-generation decentralized NFT yield farming
-              ecosystem powered by Binance Smart Chain. Non-fungible token
-              farming has been developed by Puppy Finance considering the
-              current NFT utility, diverging from the conventional yield farming
-              strategies to provide the maximum benefit for all the users.
+              Puppyworld Finance is a next-generation decentralized NFT yield
+              farming ecosystem powered by Binance Smart Chain. Non-fungible
+              token farming has been developed by Puppyworld Finance considering
+              the current NFT utility, diverging from the conventional yield
+              farming strategies to provide the maximum benefit for all the
+              users.
             </p>
           </div>
           <div className="col-md-4">
@@ -42,7 +42,7 @@ function MainHeader() {
                 data-w-id="c0134b8c-83d5-8cb3-75cd-01896103e19b"
                 className="heading headingblue opacity-cards"
               >
-                What is on Puppy Finance
+                What is on Puppyworld Finance
               </h2>
             </div>
             <div className="w-layout-grid grid-sequence">
@@ -193,16 +193,16 @@ function MainHeader() {
           </div>
         </div>
         <div className="social-btns">
-          <a href="https://" className="btn">
+          <a href="https://twitter.com/finance_puppy" className="btn">
             <img className="img-fluid img-social" src={twitter} alt="" />
           </a>
-          <a href="https://" className="btn">
+          <a href="https://github.com/puppyworld" className="btn">
             <img className="img-fluid img-social" src={github} alt="" />
           </a>
-          <a href="https://" className="btn">
+          <a href="https://medium.com/@puppyworld.finance" className="btn">
             <img className="img-fluid img-social" src={medium} alt="" />
           </a>
-          <a href="https://" className="btn">
+          <a href="https://t.me/puppyworldfinance" className="btn">
             <img className="img-fluid img-social" src={telegram} alt="" />
           </a>
         </div>
