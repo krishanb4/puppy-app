@@ -1,18 +1,20 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Navigation from './MainNav';
-import Features from './Features';
-import Loyalty from './pages/Loyalty.js';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Features from "./Features";
+import Home from "./pages/Home";
+import Loyalty from "./pages/Loyalty";
+import GenericNotFound from "./pages/GenericNotFound";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Navigation></Navigation>
         <Switch>
-          <Route path="/features" component={Features} />
-          <Route path="/loyalty" component={Loyalty} />
+          <Route exact path="/" component={Home} />
+          <Route path="/nft" component={Features} />
+          <Route path="/loyalty" component={Features} />
+          <Route component={GenericNotFound} />
         </Switch>
       </div>
     </Router>
