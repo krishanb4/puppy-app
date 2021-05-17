@@ -4,20 +4,36 @@ import {minterAddress, puppyAddress} from '../constants/constants';
 const puppyABI = require('../abis/bep20.json');
 const minterABI = require('../abis/minter.json');
 
+function toAddress(address) {
+  return ethers.utils.getAddress(address);
+}
+
 async function connect() {
   if (window.provider == undefined && window.ethereum != null) {
     var data = await window.ethereum.send('eth_requestAccounts');
-
+    console.log(window.wallet);
     handleAccountsChanged(data.result);
   }
 }
 
+async function signMessage(message) {
+  const sig = await window.provider.getSigner().signMessage(message);
+  console.log(sig);
+  return sig;
+}
+function recoverSign(message, sig) {
+  const recoveredAddress = ethers.utils.verifyMessage(message, sig);
+  console.log(recoveredAddress);
+  return recoveredAddress;
+}
+
 function handleAccountsChanged(accounts) {
   if (accounts.length === 0) {
+    window.currentAccount = ethers.constants.AddressZero;
     // MetaMask is locked or the user has not connected any accounts
     console.log('Please connect to MetaMask.');
   } else {
-    window.currentAccount = accounts[0];
+    window.currentAccount = toAddress(accounts[0]);
     window.provider = new ethers.providers.Web3Provider(window.ethereum);
     // Do any other work!
   }
@@ -100,7 +116,7 @@ async function waitForTx(tx) {
   return result.status;
 }
 
-if (typeof window.ethereum != 'undefined') {
+if (window.ethereum) {
   window.ethereum.on('accountsChanged', function (accounts) {
     // Time to reload your interface with accounts[0]!
     window.location.reload();
@@ -110,4 +126,15 @@ if (typeof window.ethereum != 'undefined') {
     window.location.reload();
   });
 }
-export {mint, connect, checkBalance, puppyBalance, aquiredNFTs, waitForTx};
+
+export {
+  mint,
+  connect,
+  checkBalance,
+  puppyBalance,
+  aquiredNFTs,
+  waitForTx,
+  toAddress,
+  signMessage,
+  recoverSign,
+};
