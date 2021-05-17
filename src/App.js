@@ -14,10 +14,23 @@ import {ethers} from 'ethers';
 function App() {
   useEffect(async function () {
     await window.wallet.connect();
+
     if (window.wallet.status !== 'connected') {
-      await window.wallet.connect('walletconnect');
+      //await window.wallet.connect('walletconnect');
+      if (
+        window.wallet.status !== 'connected' &&
+        typeof window.ethereum == 'undefined'
+      ) {
+        window.provider = new ethers.providers.JsonRpcBatchProvider(
+          "'https://data-seed-prebsc-1-s1.binance.org:8545'"
+        );
+      }
     }
-    window.provider = new ethers.providers.Web3Provider(window.wallet.ethereum);
+    if (window.wallet.status === 'connected') {
+      window.provider = new ethers.providers.Web3Provider(
+        window.wallet.ethereum
+      );
+    }
   });
   return (
     <HashRouter>

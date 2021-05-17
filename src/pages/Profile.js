@@ -31,6 +31,7 @@ import {
 } from '../functions/ethFunc';
 import {updateProfile, uploadImage} from '../functions/pinataFunc';
 import {themesList} from 'web3modal';
+import {ethers} from 'ethers';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class Profile extends React.Component {
         name: '',
         address: '',
         pro_pic: '',
+        claims: 0,
       },
       currentAccount: '',
       show: false,
@@ -52,8 +54,16 @@ class Profile extends React.Component {
 
   async componentDidMount() {
     await window.wallet.connect();
+
     if (window.wallet.status !== 'connected') {
       await window.wallet.connect('walletconnect');
+      if (
+        window.wallet.status !== 'connected' &&
+        typeof window.ethereum == 'undefined'
+      ) {
+      }
+    }
+    if (window.wallet.status === 'connected') {
     }
     const profile = await getProfile(toAddress(window.currentAccount));
     this.setState({profile: profile});
@@ -235,7 +245,10 @@ class Profile extends React.Component {
     var balance = 0;
     var level = 0;
     var proButton;
-    if (profile.address == this.state.currentAccount) {
+    if (
+      profile.address == this.state.currentAccount &&
+      this.state.address != ethers.constants.AddressZero
+    ) {
       proButton = (
         <Button
           variant="outline-primary"
@@ -393,7 +406,9 @@ class Profile extends React.Component {
                     <h6 className="mb-0">
                       <FaDollarSign /> Balance to be Distributed
                     </h6>
-                    <span className="text-secondary">{tempBalance} PUPPY</span>
+                    <span className="text-secondary">
+                      {this.state.profile.claims} PUPPY
+                    </span>
                   </li>
                   <li
                     className="
