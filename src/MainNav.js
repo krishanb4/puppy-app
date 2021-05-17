@@ -41,13 +41,30 @@ function Navigation() {
           </Link>
           {wallet.status === 'connected' ? (
             <div>
-              <Button onClick={() => wallet.reset()}>disconnect</Button>
+              <Button
+                onClick={() => {
+                  wallet.reset();
+                  window.location.reload();
+                }}
+              >
+                disconnect
+              </Button>
             </div>
           ) : (
             <div>
               Connect:
-              <Button onClick={() => wallet.connect()}>MetaMask</Button>
-              <Button onClick={() => wallet.connect('walletconnect')}>
+              <Button
+                onClick={() => {
+                  wallet.connect();
+                }}
+              >
+                MetaMask
+              </Button>
+              <Button
+                onClick={() => {
+                  wallet.connect('walletconnect');
+                }}
+              >
                 wc
               </Button>
             </div>
