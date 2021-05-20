@@ -44,6 +44,10 @@ function Navigation() {
               <Button
                 onClick={() => {
                   wallet.reset();
+                  localStorage.setItem('connected', false);
+                  if (localStorage.getItem('connection') == 'wc') {
+                    localStorage.removeItem('walletconnect');
+                  }
                   window.location.reload();
                 }}
               >
@@ -54,15 +58,21 @@ function Navigation() {
             <div>
               Connect:
               <Button
-                onClick={() => {
-                  wallet.connect();
+                onClick={async function () {
+                  await wallet.connect();
+                  localStorage.setItem('connected', true);
+                  localStorage.setItem('connection', 'metamask');
+                  window.location.reload();
                 }}
               >
                 MetaMask
               </Button>
               <Button
-                onClick={() => {
-                  wallet.connect('walletconnect');
+                onClick={async function () {
+                  await wallet.connect('walletconnect');
+                  localStorage.setItem('connected', true);
+                  localStorage.setItem('connection', 'wc');
+                  window.location.reload();
                 }}
               >
                 wc

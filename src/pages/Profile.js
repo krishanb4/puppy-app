@@ -28,6 +28,7 @@ import {
   waitForTx,
   toAddress,
   signMessage,
+  ensureConnection,
 } from '../functions/ethFunc';
 import {updateProfile, uploadImage} from '../functions/pinataFunc';
 import {themesList} from 'web3modal';
@@ -53,18 +54,7 @@ class Profile extends React.Component {
   }
 
   async componentDidMount() {
-    await window.wallet.connect();
-
-    if (window.wallet.status !== 'connected') {
-      await window.wallet.connect('walletconnect');
-      if (
-        window.wallet.status !== 'connected' &&
-        typeof window.ethereum == 'undefined'
-      ) {
-      }
-    }
-    if (window.wallet.status === 'connected') {
-    }
+    await ensureConnection();
     const profile = await getProfile(toAddress(window.currentAccount));
     this.setState({profile: profile});
     this.setState({currentAccount: window.currentAccount});

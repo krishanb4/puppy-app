@@ -3,6 +3,7 @@ import './css/Profile.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Features from './Features';
 import Home from './pages/Home';
+import Marketplace from './pages/Marketplace';
 import GenericNotFound from './pages/GenericNotFound';
 import Profile from './pages/Profile';
 import Navigation from './MainNav';
@@ -13,24 +14,25 @@ import {ethers} from 'ethers';
 
 function App() {
   useEffect(async function () {
-    await window.wallet.connect();
-
-    if (window.wallet.status !== 'connected') {
-      //await window.wallet.connect('walletconnect');
-      if (
-        window.wallet.status !== 'connected' &&
-        typeof window.ethereum == 'undefined'
-      ) {
-        window.provider = new ethers.providers.JsonRpcBatchProvider(
-          "'https://data-seed-prebsc-1-s1.binance.org:8545'"
-        );
+    var con = localStorage.getItem('connected');
+    if (con == 'true') {
+      if (localStorage.connection == 'metamask') {
+        await window.wallet.connect();
+      } else if (localStorage.connection == 'wc') {
+        await window.wallet.connect('walletconnect');
       }
     }
     if (window.wallet.status === 'connected') {
       window.provider = new ethers.providers.Web3Provider(
         window.wallet.ethereum
       );
+    } else {
+      window.provider = new ethers.providers.JsonRpcBatchProvider(
+        'https://data-seed-prebsc-1-s1.binance.org:8545'
+      );
     }
+    window.currentAccount =
+      window.wallet.account || ethers.constants.AddressZero;
   });
   return (
     <HashRouter>
@@ -41,7 +43,7 @@ function App() {
             <Home />
           </Route>
           <Route path="/nft">
-            <Features />
+            <Marketplace />
           </Route>
           <Route path="/loyalty">
             <Features />
