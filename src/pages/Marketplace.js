@@ -36,7 +36,7 @@ import {updateProfile, uploadImage} from '../functions/pinataFunc';
 import {themesList} from 'web3modal';
 import {ethers} from 'ethers';
 
-import CollectibleCard from './Items/CollectibleCard';
+import CollectiblePage from './Items/CollectiblePage';
 
 class Marketplace extends React.Component {
   constructor(props) {
@@ -64,7 +64,7 @@ class Marketplace extends React.Component {
     this.setState({uploadedImage: profile.pro_pic});
   }
   render() {
-    var cards = [];
+    /* var cards = [];
     for (var i = 0; i < 7; i = i + 4) {
       var first = i;
       var last = i + 4 > 7 ? 7 : i + 4;
@@ -77,7 +77,7 @@ class Marketplace extends React.Component {
           {cols}
         </Row>
       );
-    }
+    }*/
     let active = 0;
     return (
       <div className="container">
@@ -88,10 +88,10 @@ class Marketplace extends React.Component {
             variant="pills"
           >
             <Tab eventKey="all" title="All">
-              {cards}
+              <CollectiblePage />
             </Tab>
             <Tab eventKey="sale" title="On-Sale">
-              {cards}
+              <CollectiblePage />
             </Tab>
           </Tabs>
         </div>
