@@ -65,9 +65,13 @@ function Navigation() {
                 <button
                   className="btn btn-primary"
                   onClick={() => {
-                    wallet.reset();
-                    window.location.reload();
-                  }}
+                  wallet.reset();
+                  localStorage.setItem('connected', false);
+                  if (localStorage.getItem('connection') == 'wc') {
+                    localStorage.removeItem('walletconnect');
+                  }
+                  window.location.reload();
+                }}
                 >
                   disconnect
                 </button>
@@ -77,17 +81,23 @@ function Navigation() {
                 Connect:
                 <button
                   className="btn btn-primary"
-                  onClick={() => {
-                    wallet.connect();
-                  }}
+                  onClick={async function () {
+                  await wallet.connect();
+                  localStorage.setItem('connected', true);
+                  localStorage.setItem('connection', 'metamask');
+                  window.location.reload();
+                }}
                 >
                   MetaMask
                 </button>
                 <button
                   className="btn btn-primary"
-                  onClick={() => {
-                    wallet.connect("walletconnect");
-                  }}
+                  onClick={async function () {
+                  await wallet.connect('walletconnect');
+                  localStorage.setItem('connected', true);
+                  localStorage.setItem('connection', 'wc');
+                  window.location.reload();
+                }}
                 >
                   wc
                 </button>

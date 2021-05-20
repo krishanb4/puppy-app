@@ -16,6 +16,17 @@ async function connect() {
   }
 }
 
+async function ensureConnection() {
+  var con = localStorage.getItem('connected');
+  if (con == 'true' && window.currentAccount == ethers.constants.AddressZero) {
+    if (localStorage.connection == 'metamask') {
+      await window.wallet.connect();
+    } else if (localStorage.connection == 'wc') {
+      await window.wallet.connect('walletconnect');
+    }
+  }
+}
+
 async function signMessage(message) {
   const sig = await window.provider.getSigner().signMessage(message);
   console.log(sig);
@@ -137,4 +148,5 @@ export {
   toAddress,
   signMessage,
   recoverSign,
+  ensureConnection,
 };
