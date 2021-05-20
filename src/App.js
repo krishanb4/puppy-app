@@ -1,3 +1,4 @@
+
 import './App.css';
 import './css/Profile.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,7 +23,7 @@ function App() {
         await window.wallet.connect('walletconnect');
       }
     }
-    if (window.wallet.status === 'connected') {
+    if (window.wallet.status === "connected") {
       window.provider = new ethers.providers.Web3Provider(
         window.wallet.ethereum
       );
@@ -45,7 +46,7 @@ function App() {
           <Route path="/nft">
             <Marketplace />
           </Route>
-          <Route path="/loyalty">
+          <Route path="/loyality">
             <Features />
           </Route>
           <Route path="/profile">

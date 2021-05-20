@@ -1,10 +1,11 @@
-import React from 'react';
-import logo from './puppy.png';
-import {Navbar, Nav, Button, Modal} from 'react-bootstrap';
-import {ethers} from 'ethers';
-
-import {Link} from 'react-router-dom';
-import {useWallet, UseWalletProvider} from 'use-wallet';
+import React from "react";
+import logo from "./puppy.png";
+import * as ReactBootStrap from "react-bootstrap";
+import bootstrap from "bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router-dom";
+import { ethers } from "ethers";
+import { useWallet, UseWalletProvider } from "use-wallet";
 
 function Navigation() {
   const wallet = useWallet();
@@ -14,35 +15,56 @@ function Navigation() {
 
   return (
     <>
-      <Navbar bg="transparent" variant="dark">
-        <Navbar.Brand href="/">
-          <img
-            alt=""
-            src={logo}
-            width="60"
-            className="d-inline-block align-top"
-          />{' '}
-          PuppyWorld Finance
-        </Navbar.Brand>
-        <Nav>
-          <Link to="/" className="nav-link">
-            Home
-          </Link>
-
-          <Link to="/nft" className="nav-link">
-            NFT Marketplace
-          </Link>
-
-          <Link to="/loyalty" className="nav-link">
-            Loyalty
-          </Link>
-          <Link to="/profile" className="nav-link">
-            Profile
-          </Link>
-          {wallet.status === 'connected' ? (
-            <div>
-              <Button
-                onClick={() => {
+      <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img
+              alt=""
+              src={logo}
+              width="60"
+              className="d-inline-block align-top"
+            />
+            PuppyWorld Finance
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <p class="nav-link">
+                  <Link to="/">Home</Link>
+                </p>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/nft">
+                  <Link to="/nft">NFT Marketplace</Link>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/loyality">
+                  <Link to="/loyality">Loyality</Link>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/profile">
+                  <Link to="/profile">Profile</Link>
+                </a>
+              </li>
+            </ul>
+            {wallet.status === "connected" ? (
+              <div>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {
                   wallet.reset();
                   localStorage.setItem('connected', false);
                   if (localStorage.getItem('connection') == 'wc') {
@@ -50,40 +72,40 @@ function Navigation() {
                   }
                   window.location.reload();
                 }}
-              >
-                disconnect
-              </Button>
-            </div>
-          ) : (
-            <div>
-              Connect:
-              <Button
-                onClick={async function () {
+                >
+                  disconnect
+                </button>
+              </div>
+            ) : (
+              <div>
+                Connect:
+                <button
+                  className="btn btn-primary"
+                  onClick={async function () {
                   await wallet.connect();
                   localStorage.setItem('connected', true);
                   localStorage.setItem('connection', 'metamask');
                   window.location.reload();
                 }}
-              >
-                MetaMask
-              </Button>
-              <Button
-                onClick={async function () {
+                >
+                  MetaMask
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={async function () {
                   await wallet.connect('walletconnect');
                   localStorage.setItem('connected', true);
                   localStorage.setItem('connection', 'wc');
                   window.location.reload();
                 }}
-              >
-                wc
-              </Button>
-            </div>
-          )}
-        </Nav>
-        <div>
-          {/*<Nav.Link className="btn-wallet-connect">Connect</Nav.Link> */}
+                >
+                  wc
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-      </Navbar>
+      </nav>
     </>
   );
 }
@@ -93,8 +115,10 @@ export default () => (
     chainId={56}
     connectors={{
       // This is how connectors get configured
-      portis: {dAppId: 'my-dapp-id-123-xyz'},
-      walletconnect: {rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545'},
+      portis: { dAppId: "my-dapp-id-123-xyz" },
+      walletconnect: {
+        rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545",
+      },
     }}
   >
     <Navigation />
