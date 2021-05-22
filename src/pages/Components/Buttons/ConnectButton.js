@@ -105,6 +105,28 @@ function ConnectButton() {
             <MenuItem
               className={classes.items}
               onClick={async function () {
+                await wallet.connect();
+                localStorage.setItem('connected', true);
+                localStorage.setItem('connection', 'metamask');
+                window.location.reload();
+              }}
+            >
+              Trust Wallet
+            </MenuItem>
+            <MenuItem
+              className={classes.items}
+              onClick={async function () {
+                await wallet.connect();
+                localStorage.setItem('connected', true);
+                localStorage.setItem('connection', 'metamask');
+                window.location.reload();
+              }}
+            >
+              Safepal Wallet
+            </MenuItem>
+            <MenuItem
+              className={classes.items}
+              onClick={async function () {
                 await wallet.connect('walletconnect');
                 localStorage.setItem('connected', true);
                 localStorage.setItem('connection', 'wc');
