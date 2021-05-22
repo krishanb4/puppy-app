@@ -1,6 +1,6 @@
 import React from 'react';
-import MainNav from './MainNav';
-import dogsoon from './images/dogsoon.gif';
+import MainNav from '../MainNav';
+import dogsoon from '../images/dogsoon.gif';
 
 function Features() {
   return (

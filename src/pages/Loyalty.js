@@ -1,7 +1,19 @@
 import React from 'react';
-import {Container, Row, Col, Button, Card, Modal} from 'react-bootstrap';
+import {Container, Row, Col, Modal} from 'react-bootstrap';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Badge from '@material-ui/core/Badge';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+import {withStyles} from '@material-ui/core/styles';
 import logo from '.././images/main.png';
-import puppy from '../puppy.png';
+import puppy from '../images/puppy.png';
 import {generateItem} from '../functions/pinataFunc';
 import {
   mint,
@@ -14,6 +26,33 @@ import {
 import {loyaltyCollectibles} from '../constants/constants';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+
+const useStyles = (theme) => ({
+  grid: {
+    flexGrow: 1,
+  },
+  button: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    border: 0,
+    borderRadius: 10,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    marginTop: 10,
+  },
+  card: {
+    maxWidth: 345,
+    minWidth: 300,
+    borderRadius: 30,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    color: 'white',
+  },
+  text: {
+    color: 'white',
+  },
+});
 
 class Loyalty extends React.Component {
   constructor(props) {
@@ -42,7 +81,7 @@ class Loyalty extends React.Component {
   }
 
   async generate(id) {
-    console.log(id);
+    //console.log(id);
     this.setState({minting: true});
     //const ipfs_res = await generateItem(id, '', '', '', '');
     //const hash = ipfs_res.IpfsHash;
@@ -87,26 +126,31 @@ class Loyalty extends React.Component {
   }
 
   render() {
+    const {classes} = this.props;
     const buttons = this.state.claims.map((value, key) => {
       if (!value.claimed) {
         if (value.id > this.state.level) {
           return (
-            <Col key={key}>
-              <Button variant="outline-light" disabled>
-                Level not reached!
-              </Button>
-            </Col>
+            <Grid key={key} item>
+              <Badge badgeContent="Coming soon" color="primary">
+                <Button className={classes.button} disabled>
+                  Level not reached!
+                </Button>
+              </Badge>
+            </Grid>
           );
         } else {
           return (
-            <Col key={key}>
-              <Button
-                variant="outline-light"
-                onClick={() => this.generate(value.id)}
-              >
-                Claim Level {value.id} NFT
-              </Button>
-            </Col>
+            <Grid key={key} item>
+              <Badge badgeContent="Coming soon" color="primary">
+                <Button
+                  className={classes.button}
+                  //onClick={() => this.generate(value.id)}
+                >
+                  Claim Level {value.id} NFT
+                </Button>
+              </Badge>
+            </Grid>
           );
         }
       } else {
@@ -123,18 +167,27 @@ class Loyalty extends React.Component {
     const items = this.state.claims.map((value, key) => {
       if (value.claimed) {
         return (
-          <Card
-            style={{width: '18rem'}}
-            className="mx-auto bg-dark puppy-head"
-            key={key}
-          >
-            <Card.Img variant="top" src={loyaltyCollectibles[value.id].image} />
-            <Card.Body>
-              <Card.Title>
-                <h3>{loyaltyCollectibles[value.id].name}</h3>
-              </Card.Title>
-              <Card.Text>{loyaltyCollectibles[value.id].description}</Card.Text>
-            </Card.Body>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                alt="Contemplative Reptile"
+                image={loyaltyCollectibles[value.id].image}
+                title="Contemplative Reptile"
+              />
+              <CardContent>
+                <Typography
+                  gutterBottom
+                  //color="textSecondary"
+                  className={classes.text}
+                >
+                  {loyaltyCollectibles[value.id].name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {loyaltyCollectibles[value.id].description}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
           </Card>
         );
       }
@@ -161,7 +214,7 @@ class Loyalty extends React.Component {
     };
 
     return (
-      <div className="sm puppy-head">
+      <div className={classes.root}>
         <Modal show={this.state.minting} backdrop="static" keyboard={false}>
           <Modal.Header>
             <Modal.Title>A collectible is mining!</Modal.Title>
@@ -169,39 +222,29 @@ class Loyalty extends React.Component {
           <Modal.Body>Wait for your collectible to mint!</Modal.Body>
           <Modal.Footer></Modal.Footer>
         </Modal>
-        <Row>{buttons}</Row>
-        <h3>What is Loyalty?</h3>
-        <p className="mx-auto">
-          There are levels to all PUPPY Holders. You can claim NFTs matching
-          your level!
-        </p>
-
-        <Row>
-          <Col></Col>
-          <Col sm>
-            <Card style={{width: '18rem'}} className="bg-dark text-white">
-              <Card.Body>
-                <Card.Title>PUPPY Balance</Card.Title>
-                <h4>{this.state.balance}</h4>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col sm>
-            <Card style={{width: '18rem'}} className="bg-dark text-white">
-              <Card.Body>
-                <Card.Title>Current Loyalty Level</Card.Title>
-                <h4>{this.state.level}</h4>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col></Col>
-        </Row>
-        <Row>
-          <h3>Collected</h3>
-          <Carousel responsive={responsive}>{items}</Carousel>
-        </Row>
+        <Grid container className={classes.grid} spacing={2}>
+          <Grid item xs={12}>
+            <Grid container justify="center" spacing={2}>
+              {buttons}
+              <Card className={classes.card}>
+                <CardMedia
+                  component="img"
+                  alt="Contemplative Reptile"
+                  image={puppy}
+                  title="Contemplative Reptile"
+                />
+                <CardContent>
+                  <Typography variant="h5"> My Balance</Typography>
+                  <Typography variant="h8"> {this.state.balance}</Typography>
+                  <Typography variant="h5"> My Level</Typography>
+                  <Typography variant="h8"> {this.state.level}</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Grid>
       </div>
     );
   }
 }
-export default Loyalty;
+export default withStyles(useStyles, {withTheme: true})(Loyalty);
