@@ -34,11 +34,11 @@ export default function ImgMediaCard() {
       <CardActionArea>
         <CardMedia
           component="img"
-          alt="Contemplative Reptile"
+          alt=""
           height="400"
           width="300"
           image={collectible.image}
-          title="Contemplative Reptile"
+          title=""
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

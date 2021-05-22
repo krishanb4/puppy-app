@@ -171,9 +171,9 @@ class Loyalty extends React.Component {
             <CardActionArea>
               <CardMedia
                 component="img"
-                alt="Contemplative Reptile"
+                alt=""
                 image={loyaltyCollectibles[value.id].image}
-                title="Contemplative Reptile"
+                title=""
               />
               <CardContent>
                 <Typography
@@ -227,12 +227,7 @@ class Loyalty extends React.Component {
             <Grid container justify="center" spacing={2}>
               {buttons}
               <Card className={classes.card}>
-                <CardMedia
-                  component="img"
-                  alt="Contemplative Reptile"
-                  image={puppy}
-                  title="Contemplative Reptile"
-                />
+                <CardMedia component="img" alt="" image={puppy} title="" />
                 <CardContent>
                   <Typography variant="h5"> My Balance</Typography>
                   <Typography variant="h8"> {this.state.balance}</Typography>
