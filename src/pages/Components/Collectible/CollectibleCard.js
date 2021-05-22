@@ -35,9 +35,9 @@ export default function ImgMediaCard(props) {
         <CardActionArea>
           <CardMedia
             component="img"
-            alt="Contemplative Reptile"
+            alt=""
             image={collectible.image}
-            title="Contemplative Reptile"
+            title=""
           />
           <CardContent>
             <Typography
