@@ -1,3 +1,9 @@
+import one from '../images/collectibles/1_blured.jpg';
+import two from '../images/collectibles/2_blured.jpg';
+import three from '../images/collectibles/3_blured.jpg';
+import four from '../images/collectibles/4_blured.jpg';
+import five from '../images/collectibles/5_blured.jpg';
+
 const loyaltyCollectibles = {
   1: {
     name: 'Monaliza',
@@ -43,7 +49,41 @@ const loyaltyCollectibles = {
       'https://gateway.pinata.cloud/ipfs/QmbrHNccNLcq8RqLvSuLPCazcojWW3aRjKVhPgYi6JysgL',
   },
 };
+const collectibles = [
+  {
+    name: 'Will be revealed!',
+    description: 'Will be revealed!',
+    image: one,
+    attributes: [
+      {
+        display_type: 'date',
+        trait_type: 'birthday',
+        value: Date.now(),
+      },
+    ],
+  },
+  {
+    name: 'Will be revealed!',
+    description: 'Will be revealed!',
+    image: two,
+  },
+  {
+    name: 'Will be revealed!',
+    description: 'Will be revealed!',
+    image: three,
+  },
+  {
+    name: 'Will be revealed!',
+    description: 'Will be revealed!',
+    image: four,
+  },
+  {
+    name: 'Will be revealed!',
+    description: 'Will be revealed!',
+    image: five,
+  },
+];
 const minterAddress = '0x812541A20DF9AE20cF2930F418C8B486edbF368e';
-const puppyAddress = '0xEc6043A64C8eAAbe731Db739e909F0d5254B1392';
+const puppyAddress = '0x7C075eDddbcF23e53E561e5AeA8C32067d5adb2d';
 
-export {loyaltyCollectibles, minterAddress, puppyAddress};
+export {loyaltyCollectibles, minterAddress, puppyAddress, collectibles};

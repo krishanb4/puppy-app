@@ -2,13 +2,13 @@ const pinataSDK = require('@pinata/sdk');
 const recoverSign = require('./ethFunc').recoverSign;
 const fs = require('fs');
 
-const sc = 'fcebc7750ffb180096f2';
-const k = 'e5f7b75d4870a713863320ea1e6560ceb0d2bfc8873e7cb7633232c874e58739';
+const sc = '343d76156f497161c8d3';
+const k = '42ef4dfec173684e7e544686d94d20b006e79ea96cc74c5cc59eed1574ef2e59';
 
 const pinata = pinataSDK(sc, k);
 const collectibles = require('../constants/constants').loyaltyCollectibles;
 
-console.log(pinata);
+//console.log(pinata);
 async function generateItem(id, name, description, external_url, address) {
   const body = {
     description: collectibles[`${id}`].description,
@@ -67,7 +67,7 @@ async function updateProfile(name, description, pro_pic, signature) {
 }
 
 async function uploadImage(file, address) {
-  console.log(file);
+  //console.log(file);
   var f = null;
   const options = {
     pinataMetadata: {
@@ -119,7 +119,7 @@ async function getAll(address) {
     metadata: metadataFilter,
   };
   var res = await pinata.pinList(filters);
-  console.log(res);
+  //console.log(res);
 
   for (var i = 0; i < 10; i++) {
     await pinata.unpin(res.rows[i].ipfs_pin_hash);

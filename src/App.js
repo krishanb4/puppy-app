@@ -1,12 +1,13 @@
-
-import './App.css';
+import './css/App.css';
 import './css/Profile.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Features from './Features';
+import Features from './pages/Features';
 import Home from './pages/Home';
 import Marketplace from './pages/Marketplace';
 import GenericNotFound from './pages/GenericNotFound';
 import Profile from './pages/Profile';
+import Loyalty from './pages/Loyalty';
+import CollectiblePage from './pages/Components/Collectible/CollectiblePage';
 import Navigation from './MainNav';
 import {HashRouter, Switch, Route} from 'react-router-dom';
 import {useState, useEffect} from 'react';
@@ -23,7 +24,7 @@ function App() {
         await window.wallet.connect('walletconnect');
       }
     }
-    if (window.wallet.status === "connected") {
+    if (window.wallet.status === 'connected') {
       window.provider = new ethers.providers.Web3Provider(
         window.wallet.ethereum
       );
@@ -46,8 +47,11 @@ function App() {
           <Route path="/nft">
             <Marketplace />
           </Route>
+          <Route path="/col/:col">
+            <CollectiblePage />
+          </Route>
           <Route path="/loyality">
-            <Features />
+            <Loyalty />
           </Route>
           <Route path="/profile">
             <Profile />

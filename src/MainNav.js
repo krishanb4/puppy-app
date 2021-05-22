@@ -1,18 +1,13 @@
-import React from "react";
-import logo from "./puppy.png";
-import * as ReactBootStrap from "react-bootstrap";
-import bootstrap from "bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import { Link } from "react-router-dom";
-import { ethers } from "ethers";
-import { useWallet, UseWalletProvider } from "use-wallet";
+import React from 'react';
+import logo from './images/puppy.png';
+import * as ReactBootStrap from 'react-bootstrap';
+import bootstrap from 'bootstrap';
+import {LinkContainer} from 'react-router-bootstrap';
+import {Link} from 'react-router-dom';
+import ConnectButton from './pages/Components/Buttons/ConnectButton';
+import Box from '@material-ui/core/Box';
 
 function Navigation() {
-  const wallet = useWallet();
-  window.wallet = wallet;
-  const blockNumber = wallet.getBlockNumber();
-  window.currentAccount = window.wallet.account || ethers.constants.AddressZero;
-
   return (
     <>
       <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
@@ -60,67 +55,14 @@ function Navigation() {
                 </a>
               </li>
             </ul>
-            {wallet.status === "connected" ? (
-              <div>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => {
-                  wallet.reset();
-                  localStorage.setItem('connected', false);
-                  if (localStorage.getItem('connection') == 'wc') {
-                    localStorage.removeItem('walletconnect');
-                  }
-                  window.location.reload();
-                }}
-                >
-                  disconnect
-                </button>
-              </div>
-            ) : (
-              <div>
-                Connect:
-                <button
-                  className="btn btn-primary"
-                  onClick={async function () {
-                  await wallet.connect();
-                  localStorage.setItem('connected', true);
-                  localStorage.setItem('connection', 'metamask');
-                  window.location.reload();
-                }}
-                >
-                  MetaMask
-                </button>
-                <button
-                  className="btn btn-primary"
-                  onClick={async function () {
-                  await wallet.connect('walletconnect');
-                  localStorage.setItem('connected', true);
-                  localStorage.setItem('connection', 'wc');
-                  window.location.reload();
-                }}
-                >
-                  wc
-                </button>
-              </div>
-            )}
           </div>
+          <Box display="flex" flexDirection="row-reverse" p={1} m={1}>
+            <ConnectButton></ConnectButton>
+          </Box>
         </div>
       </nav>
     </>
   );
 }
 
-export default () => (
-  <UseWalletProvider
-    chainId={56}
-    connectors={{
-      // This is how connectors get configured
-      portis: { dAppId: "my-dapp-id-123-xyz" },
-      walletconnect: {
-        rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545",
-      },
-    }}
-  >
-    <Navigation />
-  </UseWalletProvider>
-);
+export default Navigation;

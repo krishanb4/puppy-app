@@ -7,42 +7,54 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {useParams} from 'react-router-dom';
+
+////////////////images/////////////////
+import {functions} from 'lodash-es';
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    minWidth: 300,
   },
 });
 
 export default function ImgMediaCard() {
-  const classes = useStyles();
+  let {col} = useParams();
+  //console.log(col);
+  const handleBuy = function () {};
 
+  const handleView = function () {};
+
+  const classes = useStyles();
+  const collectibles = require('../../../constants/constants').collectibles;
+  const collectible = collectibles[col];
   return (
     <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
           component="img"
           alt="Contemplative Reptile"
-          height="140"
-          image="https://gateway.pinata.cloud/ipfs/QmVxtQTuo1ycSfhKQA5kgqxyrV68mbbEgYhgerAcjugwRV"
+          height="400"
+          width="300"
+          image={collectible.image}
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+            {collectible.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+            {collectible.description}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Share
+        <Button size="small" color="primary" onClick={handleBuy}>
+          Buy
         </Button>
-        <Button size="small" color="primary">
-          Learn More
+        <Button size="small" color="primary" onClick={handleView}>
+          View
         </Button>
       </CardActions>
     </Card>

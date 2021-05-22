@@ -17,7 +17,7 @@ import {
   Tabs,
   Tab,
 } from 'react-bootstrap';
-import Features from '../Features';
+import Features from './Features';
 import {getProfile} from '../functions/data';
 import {
   mint,
@@ -43,6 +43,7 @@ class Profile extends React.Component {
         address: '',
         pro_pic: '',
         claims: 0,
+        balance: 0,
       },
       currentAccount: '',
       show: false,
@@ -56,6 +57,9 @@ class Profile extends React.Component {
   async componentDidMount() {
     await ensureConnection();
     const profile = await getProfile(toAddress(window.currentAccount));
+    const puppy = await puppyBalance(window.currentAccount);
+    profile.balance = puppy[0];
+    profile.level = puppy[1];
     this.setState({profile: profile});
     this.setState({currentAccount: window.currentAccount});
     this.setState({uploadedImage: profile.pro_pic});
@@ -67,6 +71,9 @@ class Profile extends React.Component {
     const handleClose = async function () {
       _this.setState({show: false});
       const prof = await getProfile(toAddress(window.currentAccount));
+      const puppy = await puppyBalance(window.currentAccount);
+      profile.balance = puppy[0];
+      profile.level = puppy[1];
       _this.setState({profile: prof});
     };
     const handleShow = () => this.setState({show: true});
@@ -121,9 +128,9 @@ class Profile extends React.Component {
             maxContentLength: 'Infinity', //this is needed to prevent axios from erroring out with large files
             headers: {
               'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-              pinata_api_key: 'fcebc7750ffb180096f2',
+              pinata_api_key: '343d76156f497161c8d3',
               pinata_secret_api_key:
-                'e5f7b75d4870a713863320ea1e6560ceb0d2bfc8873e7cb7633232c874e58739',
+                '42ef4dfec173684e7e544686d94d20b006e79ea96cc74c5cc59eed1574ef2e59',
             },
             onUploadProgress: function (uploadEvent) {
               console.log(
@@ -136,10 +143,10 @@ class Profile extends React.Component {
             _this.setState({
               uploadedImage: 'https://ipfs.io/ipfs/' + response.data.IpfsHash,
             });
-            console.log(_this.state);
+            //console.log(_this.state);
           })
           .catch(function (error) {
-            console.log(error);
+            //console.log(error);
           });
       }
     };
@@ -232,8 +239,8 @@ class Profile extends React.Component {
     var aquiredCount = 0;
     var salesCount = 0;
     var tempBalance = 0;
-    var balance = 0;
-    var level = 0;
+    var balance = profile.balance;
+    var level = profile.level;
     var proButton;
     if (
       profile.address == this.state.currentAccount &&
