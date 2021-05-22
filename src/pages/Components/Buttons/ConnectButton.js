@@ -59,7 +59,7 @@ function ConnectButton() {
             wallet.reset();
             localStorage.setItem('connected', false);
             if (localStorage.getItem('connection') == 'wc') {
-              localStorage.removeItem('walletconnect');
+              //localStorage.removeItem('walletconnect');
             }
             window.location.reload();
           }}
