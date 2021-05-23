@@ -13,6 +13,8 @@
   text-align: center;
   background-image: url('../images/back.png');
   background-repeat: inherit;
+  height: 100vh;
+  overflow-x: hidden;
 }
 
 .features {

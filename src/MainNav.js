@@ -40,6 +40,11 @@ function Navigation() {
                 </p>
               </li>
               <li class="nav-item">
+                <p class="nav-link">
+                  <Link to="/sales">Sales</Link>
+                </p>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="/nft">
                   <Link to="/nft">NFT Marketplace</Link>
                 </a>
@@ -51,7 +56,7 @@ function Navigation() {
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/profile">
-                  <Link to="/profile">Profile</Link>
+                  <Link to={'/profile'}>Profile</Link>
                 </a>
               </li>
             </ul>

@@ -33,6 +33,7 @@ import {
 import {updateProfile, uploadImage} from '../functions/pinataFunc';
 import {themesList} from 'web3modal';
 import {ethers} from 'ethers';
+import {withRouter} from 'react-router-dom';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -56,8 +57,12 @@ class Profile extends React.Component {
 
   async componentDidMount() {
     await ensureConnection();
-    const profile = await getProfile(toAddress(window.currentAccount));
-    const puppy = await puppyBalance(window.currentAccount);
+    var address = this.props.match.params.address || window.currentAccount;
+    address = ethers.utils.isAddress(address)
+      ? address
+      : ethers.constants.AddressZero;
+    const profile = await getProfile(toAddress(address));
+    const puppy = await puppyBalance(address);
     profile.balance = puppy[0];
     profile.level = puppy[1];
     this.setState({profile: profile});
@@ -67,13 +72,18 @@ class Profile extends React.Component {
 
   editProfile() {
     const _this = this;
+
     var profile = this.state.profile;
     const handleClose = async function () {
       _this.setState({show: false});
-      const prof = await getProfile(toAddress(window.currentAccount));
-      const puppy = await puppyBalance(window.currentAccount);
-      profile.balance = puppy[0];
-      profile.level = puppy[1];
+      var address = this.props.match.params.address || window.currentAccount;
+      address = ethers.utils.isAddress(address)
+        ? address
+        : ethers.constants.AddressZero;
+      const prof = await getProfile(toAddress(address));
+      const puppy = await puppyBalance(address);
+      prof.balance = puppy[0];
+      prof.level = puppy[1];
       _this.setState({profile: prof});
     };
     const handleShow = () => this.setState({show: true});
@@ -483,4 +493,4 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+export default withRouter(Profile);
