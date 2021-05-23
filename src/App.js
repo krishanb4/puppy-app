@@ -7,6 +7,8 @@ import Marketplace from './pages/Marketplace';
 import GenericNotFound from './pages/GenericNotFound';
 import Profile from './pages/Profile';
 import Loyalty from './pages/Loyalty';
+import Sales from './pages/Sales';
+
 import CollectiblePage from './pages/Components/Collectible/CollectiblePage';
 import Navigation from './MainNav';
 import {HashRouter, Switch, Route} from 'react-router-dom';
@@ -53,8 +55,14 @@ function App() {
           <Route path="/loyality">
             <Loyalty />
           </Route>
+          <Route path="/profile/:address">
+            <Profile />
+          </Route>
           <Route path="/profile">
             <Profile />
+          </Route>
+          <Route path="/sales">
+            <Sales />
           </Route>
           <Route>
             <GenericNotFound />

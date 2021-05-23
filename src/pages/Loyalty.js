@@ -52,6 +52,10 @@ const useStyles = (theme) => ({
   text: {
     color: 'white',
   },
+  media: {
+    width: '50%',
+    margin: 'auto',
+  },
 });
 
 class Loyalty extends React.Component {
@@ -227,7 +231,13 @@ class Loyalty extends React.Component {
             <Grid container justify="center" spacing={2}>
               {buttons}
               <Card className={classes.card}>
-                <CardMedia component="img" alt="" image={puppy} title="" />
+                <CardMedia
+                  component="img"
+                  alt=""
+                  image={puppy}
+                  title=""
+                  className={classes.media}
+                />
                 <CardContent>
                   <Typography variant="h5"> My Balance</Typography>
                   <Typography variant="h8"> {this.state.balance}</Typography>
