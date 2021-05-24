@@ -1,7 +1,7 @@
 import one from '../images/collectibles/1_blured.jpg';
 import two from '../images/collectibles/2_blured.jpg';
 import three from '../images/collectibles/3_blured.jpg';
-import four from '../images/collectibles/4_blured.jpg';
+import four from '../images/collectibles/4.jpg';
 import five from '../images/collectibles/5_blured.jpg';
 
 const loyaltyCollectibles = {
@@ -73,7 +73,7 @@ const collectibles = [
     image: three,
   },
   {
-    name: 'Will be revealed!',
+    name: 'Poodle',
     description: 'Will be revealed!',
     image: four,
   },

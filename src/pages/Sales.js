@@ -13,9 +13,14 @@ import Paper from '@material-ui/core/Paper';
 
 import puppy from '../images/puppy.png';
 import back from '../images/back.png';
+import {collectibles} from '../constants/constants';
 
 ////////////////////custom functions////////////////
-import {checkBalance, ensureConnection} from '../functions/ethFunc';
+import {
+  checkBalance,
+  ensureConnection,
+  puppyBalance,
+} from '../functions/ethFunc';
 
 const useStyles = (theme) => ({
   root: {
@@ -49,10 +54,16 @@ const useStyles = (theme) => ({
   text: {
     color: 'white',
     alignItems: 'left',
+    //marginLeft: 50,
+    marginBottom: 10,
   },
   media: {
     width: '50%',
     margin: 'auto',
+  },
+  paper: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    marginBottom: 50,
   },
 });
 const BorderLinearProgress = withStyles((theme) => ({
@@ -83,15 +94,35 @@ class Sales extends React.Component {
         user_filled: 0,
         user_remaining: 0,
       },
+      private_sale: {
+        total: 1500,
+        filled_total: 500,
+        remaining_total: 0,
+        user_filled: false,
+        user_remaining: 0,
+      },
+      nft_sale: {
+        name: collectibles[3].name,
+        id: 3,
+        image: collectibles[3].image,
+        user_filled: 0,
+        price: 0.1,
+        on_sale: 50,
+        sold: 20,
+      },
       user_balance: 0,
+      user_puppy_balance: 0,
+      puppy_price: 0.3,
     };
   }
 
   async componentDidMount() {
     await ensureConnection();
     var balance = await checkBalance(window.currentAccount);
+    var puppyB = await puppyBalance(window.currentAccount);
     this.setState({
       user_balance: Number(Number(balance) / 10 ** 18).toFixed(4),
+      user_puppy_balance: Number(puppyB[0]).toFixed(4),
     });
   }
 
@@ -100,9 +131,66 @@ class Sales extends React.Component {
 
     return (
       <div>
+        <Paper className={classes.paper}>
+          <Typography variant="h6" className={classes.text}>
+            PUPPY Price: {this.state.puppy_price} $
+          </Typography>
+          <Typography variant="h6" className={classes.text}>
+            PUPPY Balance: {this.state.user_puppy_balance}
+          </Typography>
+          <Typography variant="h6" className={classes.text}>
+            BNB Balance: {this.state.user_balance}
+          </Typography>
+        </Paper>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Grid container justify="center" spacing={2}>
+              <Card className={classes.card}>
+                <CardMedia
+                  component="img"
+                  alt=""
+                  image={this.state.nft_sale.image}
+                  title=""
+                />
+                <CardContent>
+                  <Typography variant="h4" className={classes.text}>
+                    {this.state.nft_sale.name}
+                  </Typography>
+                  <Typography variant="p">
+                    {this.state.nft_sale.price} BNB
+                  </Typography>
+
+                  <Typography variant="h6">Already Commited</Typography>
+                  <Typography variant="p">
+                    {this.state.nft_sale.user_filled
+                      ? 'Commited'
+                      : 'Not Commited'}
+                  </Typography>
+                </CardContent>
+                <CardActionArea>
+                  <Typography variant="p">
+                    {this.state.nft_sale.sold} out of{' '}
+                    {this.state.nft_sale.on_sale} sold.
+                  </Typography>
+                  <BorderLinearProgress
+                    variant="determinate"
+                    value={
+                      (this.state.nft_sale.sold * 100) /
+                      this.state.nft_sale.on_sale
+                    }
+                  />
+
+                  <Button
+                    className={classes.button}
+                    size="large"
+                    color="primary"
+                    //onClick={handleBuy}
+                  >
+                    Buy
+                  </Button>
+                </CardActionArea>
+              </Card>
+
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
@@ -115,8 +203,6 @@ class Sales extends React.Component {
                   <Typography variant="h4" className={classes.text}>
                     Pre Sale
                   </Typography>
-                  <Typography variant="h6">BNB Balance</Typography>
-                  <Typography variant="p">{this.state.user_balance}</Typography>
                   <Typography variant="h6">Already Commited</Typography>
                   <Typography variant="p">
                     {this.state.pre_sale.user_filled}
@@ -159,8 +245,6 @@ class Sales extends React.Component {
                 />
                 <CardContent>
                   <Typography variant="h4">Private Sale</Typography>
-                  <Typography variant="h6">BNB Balance</Typography>
-                  <Typography variant="p">{this.state.user_balance}</Typography>
                   <Typography variant="h6">Already Commited</Typography>
                   <Typography variant="p">
                     {this.state.pre_sale.user_filled}
