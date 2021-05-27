@@ -149,7 +149,7 @@ class Loyalty extends React.Component {
               <Badge badgeContent="Coming soon" color="primary">
                 <Button
                   className={classes.button}
-                  //onClick={() => this.generate(value.id)}
+                  onClick={() => this.generate(value.id)}
                 >
                   Claim Level {value.id} NFT
                 </Button>

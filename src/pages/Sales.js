@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 import puppy from '../images/puppy.png';
 import back from '../images/back.png';
@@ -20,6 +22,8 @@ import {
   checkBalance,
   ensureConnection,
   puppyBalance,
+  buyNFT,
+  nftSale,
 } from '../functions/ethFunc';
 
 const useStyles = (theme) => ({
@@ -44,7 +48,7 @@ const useStyles = (theme) => ({
   card: {
     maxWidth: 300,
     minWidth: 300,
-    borderRadius: 50,
+    borderRadius: 30,
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     color: 'white',
@@ -64,6 +68,9 @@ const useStyles = (theme) => ({
   paper: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     marginBottom: 50,
+    marginRight: 50,
+    marginLeft: 50,
+    borderRadius: 30,
   },
 });
 const BorderLinearProgress = withStyles((theme) => ({
@@ -89,27 +96,39 @@ class Sales extends React.Component {
     this.state = {
       pre_sale: {
         total: 1500,
-        filled_total: 500,
+        filled_total: 0,
         remaining_total: 0,
         user_filled: 0,
         user_remaining: 0,
+        min: 0.1,
+        max: 5,
       },
       private_sale: {
-        total: 1500,
-        filled_total: 500,
+        total: 2000,
+        filled_total: 0,
         remaining_total: 0,
-        user_filled: false,
+        user_filled: 0,
         user_remaining: 0,
+        min: 1,
+        max: 20,
       },
       nft_sale: {
-        name: collectibles[3].name,
-        id: 3,
-        image: collectibles[3].image,
+        name: collectibles[0].name,
+        id: collectibles[0].id,
+        image: collectibles[0].image,
         user_filled: 0,
-        price: 0.1,
-        on_sale: 50,
-        sold: 20,
+        price: 0,
+        on_sale: collectibles[0].initial_sale,
+        sold: 0,
       },
+      buying_pvt_sale: false,
+      buying_pre_sale: false,
+      buying_nft_sale: false,
+      bought_pvt_sale: false,
+      bought_pre_sale: false,
+      bought_nft_sale: false,
+      open: false,
+      message: 'NFT Bought',
       user_balance: 0,
       user_puppy_balance: 0,
       puppy_price: 0.3,
@@ -120,17 +139,67 @@ class Sales extends React.Component {
     await ensureConnection();
     var balance = await checkBalance(window.currentAccount);
     var puppyB = await puppyBalance(window.currentAccount);
+    var sale = await nftSale(this.state.nft_sale.id);
+    const saleData = this.state.nft_sale;
+    saleData.on_sale = Number(sale.forSale);
+    saleData.sold = Number(sale.sold);
+    saleData.price = Number(sale.tokenPrice) / 10 ** 18;
     this.setState({
       user_balance: Number(Number(balance) / 10 ** 18).toFixed(4),
       user_puppy_balance: Number(puppyB[0]).toFixed(4),
+      nft_sale: saleData,
     });
   }
 
   render() {
     const {classes} = this.props;
+    const _this = this;
+    const buyCollectible = async function () {
+      const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+      const hash = await buyNFT(
+        _this.state.nft_sale.id,
+        _this.state.nft_sale.price
+      );
+      _this.setState({
+        open: true,
+        message: 'NFT Buying in progress!',
+        buying_nft_sale: true,
+      });
+      waitForTx(hash).then((status) => {
+        if (status) {
+          _this.setState({
+            open: true,
+            message: 'NFT Bought!',
+            bought_nft_sale: true,
+          });
+        } else {
+          _this.setState({
+            open: true,
+            message: 'Transaction Failed!',
+            buying_nft_sale: false,
+          });
+        }
+      });
+    };
 
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      _this.setState({open: false});
+    };
     return (
       <div>
+        <Snackbar
+          open={this.state.open}
+          autoHideDuration={6000}
+          anchorOrigin={{vertical: 'center', horizontal: 'center'}}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="success">
+            {this.state.message}
+          </Alert>
+        </Snackbar>
         <Paper className={classes.paper}>
           <Typography variant="h6" className={classes.text}>
             PUPPY Price: {this.state.puppy_price} $
@@ -159,13 +228,6 @@ class Sales extends React.Component {
                   <Typography variant="p">
                     {this.state.nft_sale.price} BNB
                   </Typography>
-
-                  <Typography variant="h6">Already Commited</Typography>
-                  <Typography variant="p">
-                    {this.state.nft_sale.user_filled
-                      ? 'Commited'
-                      : 'Not Commited'}
-                  </Typography>
                 </CardContent>
                 <CardActionArea>
                   <Typography variant="p">
@@ -179,18 +241,24 @@ class Sales extends React.Component {
                       this.state.nft_sale.on_sale
                     }
                   />
-
+                  <br></br>
+                  <Typography variant="small">
+                    In initial sale, a single user can buy one time only!
+                  </Typography>
+                  <br></br>
                   <Button
                     className={classes.button}
                     size="large"
                     color="primary"
-                    //onClick={handleBuy}
+                    onClick={buyCollectible}
+                    disabled={
+                      this.state.bought_nft_sale || this.state.buying_nft_sale
+                    }
                   >
                     Buy
                   </Button>
                 </CardActionArea>
               </Card>
-
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
@@ -200,8 +268,15 @@ class Sales extends React.Component {
                   title=""
                 />
                 <CardContent>
-                  <Typography variant="h4" className={classes.text}>
-                    Pre Sale
+                  <Typography variant="h4">Pre Sale</Typography>
+                  <Typography variant="small">(Not started yet!)</Typography>
+                  <br></br>
+                  <Typography variant="p">
+                    Min: {this.state.pre_sale.min}
+                  </Typography>
+                  <br></br>
+                  <Typography variant="p">
+                    Max: {this.state.pre_sale.max}
                   </Typography>
                   <Typography variant="h6">Already Commited</Typography>
                   <Typography variant="p">
@@ -209,7 +284,8 @@ class Sales extends React.Component {
                   </Typography>
                   <Typography variant="h6">Remaining</Typography>
                   <Typography variant="p">
-                    {this.state.pre_sale.user_remaining}
+                    {this.state.pre_sale.max - this.state.pre_sale.user_filled}{' '}
+                    BNB
                   </Typography>
                 </CardContent>
                 <CardActionArea>
@@ -224,11 +300,18 @@ class Sales extends React.Component {
                       this.state.pre_sale.total
                     }
                   />
-
+                  <br></br>
+                  <Typography variant="small">
+                    In initial sale, a single user can buy upto a maximum of{' '}
+                    {this.state.pre_sale.max} BNB, starting from{' '}
+                    {this.state.pre_sale.min} BNB
+                  </Typography>
+                  <br></br>
                   <Button
                     className={classes.button}
                     size="large"
                     color="primary"
+                    disabled
                     //onClick={handleBuy}
                   >
                     Buy
@@ -245,23 +328,42 @@ class Sales extends React.Component {
                 />
                 <CardContent>
                   <Typography variant="h4">Private Sale</Typography>
+                  <Typography variant="small">(Not started yet!)</Typography>
+                  <br></br>
+                  <Typography variant="p">
+                    Min: {this.state.private_sale.min}
+                  </Typography>
+                  <br></br>
+                  <Typography variant="p">
+                    Max: {this.state.private_sale.max}
+                  </Typography>
                   <Typography variant="h6">Already Commited</Typography>
                   <Typography variant="p">
-                    {this.state.pre_sale.user_filled}
+                    {this.state.private_sale.user_filled}
                   </Typography>
                   <Typography variant="h6">Remaining</Typography>
                   <Typography variant="p">
-                    {this.state.pre_sale.user_remaining}
+                    {this.state.private_sale.max -
+                      this.state.private_sale.user_filled}{' '}
+                    BNB
                   </Typography>
                 </CardContent>
                 <CardActionArea>
                   <Typography variant="p">
-                    {0} out of {0} filled.
+                    {this.state.private_sale.filled_total} out of{' '}
+                    {this.state.private_sale.total} filled.
                   </Typography>
                   <BorderLinearProgress
                     variant="determinate"
-                    value={(0 * 100) / this.state.pre_sale.total}
+                    value={(0 * 100) / this.state.private_sale.total}
                   />
+                  <br></br>
+                  <Typography variant="small">
+                    In initial sale, a single user can buy upto a maximum of{' '}
+                    {this.state.private_sale.max} BNB, starting from{' '}
+                    {this.state.private_sale.min} BNB
+                  </Typography>
+                  <br></br>
                   <Button
                     className={classes.button}
                     size="large"

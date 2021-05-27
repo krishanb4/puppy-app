@@ -6,6 +6,7 @@ import CollectiblePage from './Components/Collectible/CollectiblesPage';
 
 //////////////Custom Functions//////////////////////
 import {ensureConnection} from '../functions/ethFunc';
+import {collectibles} from '../constants/constants';
 
 class Marketplace extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Marketplace extends React.Component {
     let active = 0;
     return (
       <Container>
-        <CollectiblePage></CollectiblePage>
+        <CollectiblePage collectibles={collectibles}></CollectiblePage>
       </Container>
     );
   }

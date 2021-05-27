@@ -57,6 +57,9 @@ export default function ImgMediaCard(props) {
           <Button size="small" color="primary" onClick={handleBuy} disabled>
             Buy
           </Button>
+          <Button size="small" color="primary" onClick={handleBuy} disabled>
+            Sell
+          </Button>
           <Button size="small" color="primary" onClick={handleView} disabled>
             View
           </Button>
