@@ -24,6 +24,7 @@ import {
   puppyBalance,
   buyNFT,
   nftSale,
+  waitForTx,
 } from '../functions/ethFunc';
 
 const useStyles = (theme) => ({
@@ -57,9 +58,9 @@ const useStyles = (theme) => ({
   },
   text: {
     color: 'white',
-    alignItems: 'left',
-    //marginLeft: 50,
-    marginBottom: 10,
+    alignItems: 'center',
+    marginLeft: 1,
+    marginRight: 1,
   },
   media: {
     width: '50%',
@@ -95,22 +96,22 @@ class Sales extends React.Component {
     super(props);
     this.state = {
       pre_sale: {
-        total: 1500,
+        total: 0,
         filled_total: 0,
         remaining_total: 0,
         user_filled: 0,
         user_remaining: 0,
-        min: 0.1,
-        max: 5,
+        min: 0,
+        max: 0,
       },
       private_sale: {
-        total: 2000,
+        total: 0,
         filled_total: 0,
         remaining_total: 0,
         user_filled: 0,
         user_remaining: 0,
-        min: 1,
-        max: 20,
+        min: 0,
+        max: 0,
       },
       nft_sale: {
         name: collectibles[0].name,
@@ -131,7 +132,7 @@ class Sales extends React.Component {
       message: 'NFT Bought',
       user_balance: 0,
       user_puppy_balance: 0,
-      puppy_price: 0.3,
+      puppy_price: '?',
     };
   }
 
@@ -250,7 +251,7 @@ class Sales extends React.Component {
                     className={classes.button}
                     size="large"
                     color="primary"
-                    onClick={buyCollectible}
+                    //onClick={buyCollectible}
                     disabled={
                       this.state.bought_nft_sale || this.state.buying_nft_sale
                     }
@@ -301,7 +302,7 @@ class Sales extends React.Component {
                     }
                   />
                   <br></br>
-                  <Typography variant="small">
+                  <Typography variant="p" className={classes.text}>
                     In initial sale, a single user can buy upto a maximum of{' '}
                     {this.state.pre_sale.max} BNB, starting from{' '}
                     {this.state.pre_sale.min} BNB
@@ -358,7 +359,7 @@ class Sales extends React.Component {
                     value={(0 * 100) / this.state.private_sale.total}
                   />
                   <br></br>
-                  <Typography variant="small">
+                  <Typography variant="small" className={classes.text}>
                     In initial sale, a single user can buy upto a maximum of{' '}
                     {this.state.private_sale.max} BNB, starting from{' '}
                     {this.state.private_sale.min} BNB

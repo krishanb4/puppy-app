@@ -47,7 +47,7 @@ class Profile extends React.Component {
       profile: {
         name: '',
         address: '',
-        pro_pic: '',
+        pro_pic: loading,
         claims: 0,
         balance: 0,
         collectibles: collectibles,
