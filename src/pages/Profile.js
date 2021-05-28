@@ -29,11 +29,16 @@ import {
   toAddress,
   signMessage,
   ensureConnection,
+  nftBalance,
 } from '../functions/ethFunc';
 import {updateProfile, uploadImage} from '../functions/pinataFunc';
 import {themesList} from 'web3modal';
 import {ethers} from 'ethers';
 import {withRouter} from 'react-router-dom';
+
+///////////custom components////////
+import CollectiblesPage from './Components/Collectible/CollectiblesPage.js';
+import {collectibles} from '../constants/constants';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -42,15 +47,17 @@ class Profile extends React.Component {
       profile: {
         name: '',
         address: '',
-        pro_pic: '',
+        pro_pic: loading,
         claims: 0,
         balance: 0,
+        collectibles: collectibles,
       },
       currentAccount: '',
       show: false,
       uploadedImage: '',
       step: 'Save Changes',
       saving: false,
+      loaded: false,
     };
     this.editProfile = this.editProfile.bind(this);
   }
@@ -61,13 +68,19 @@ class Profile extends React.Component {
     address = ethers.utils.isAddress(address)
       ? address
       : ethers.constants.AddressZero;
-    const profile = await getProfile(toAddress(address));
+    var profile = await getProfile(toAddress(address));
     const puppy = await puppyBalance(address);
+
     profile.balance = puppy[0];
     profile.level = puppy[1];
+    profile.collectibles = [];
     this.setState({profile: profile});
     this.setState({currentAccount: window.currentAccount});
     this.setState({uploadedImage: profile.pro_pic});
+    const cols = await nftBalance(address);
+    profile = this.state.profile;
+    profile.collectibles = cols;
+    this.setState({profile: profile, loaded: true});
   }
 
   editProfile() {
@@ -473,18 +486,10 @@ class Profile extends React.Component {
                   <hr />
                 </div>
               </div>
-              <Tabs
-                defaultActiveKey="all"
-                id="uncontrolled-tab-example"
-                variant="pills"
-              >
-                <Tab eventKey="all" title="All">
-                  {cards}
-                </Tab>
-                <Tab eventKey="sale" title="On-Sale">
-                  {cards}
-                </Tab>
-              </Tabs>
+              <CollectiblesPage
+                collectibles={this.state.profile.collectibles}
+                loaded={this.state.loaded}
+              />
             </div>
           </Row>
         </div>

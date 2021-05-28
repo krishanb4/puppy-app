@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Badge from '@material-ui/core/Badge';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 import {withStyles} from '@material-ui/core/styles';
 import logo from '.././images/main.png';
@@ -22,6 +24,7 @@ import {
   puppyBalance,
   aquiredNFTs,
   waitForTx,
+  ensureConnection,
 } from '../functions/ethFunc';
 import {loyaltyCollectibles} from '../constants/constants';
 import Carousel from 'react-multi-carousel';
@@ -86,10 +89,11 @@ class Loyalty extends React.Component {
 
   async generate(id) {
     //console.log(id);
-    this.setState({minting: true});
+
     //const ipfs_res = await generateItem(id, '', '', '', '');
     //const hash = ipfs_res.IpfsHash;
     const txHash = await mint(id);
+    this.setState({minting: true});
     const status = await waitForTx(txHash);
     if (status == true) {
       aquiredNFTs(window.currentAccount).then((data) => {
@@ -108,12 +112,10 @@ class Loyalty extends React.Component {
     this.setState({minting: false});
   }
   async componentDidMount() {
-    connect().then((dat) => {
-      //this.checkLevel();
-      puppyBalance(window.currentAccount).then((data) => {
-        this.setState({balance: Number(data[0]).toFixed(3)});
-        this.setState({level: data[1]});
-      });
+    await ensureConnection();
+    puppyBalance(window.currentAccount).then((data) => {
+      this.setState({balance: Number(data[0]).toFixed(3)});
+      this.setState({level: data[1]});
 
       aquiredNFTs(window.currentAccount).then((data) => {
         var newClaims = [];
@@ -219,13 +221,15 @@ class Loyalty extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Modal show={this.state.minting} backdrop="static" keyboard={false}>
-          <Modal.Header>
-            <Modal.Title>A collectible is mining!</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Wait for your collectible to mint!</Modal.Body>
-          <Modal.Footer></Modal.Footer>
-        </Modal>
+        <Snackbar
+          open={this.state.minting}
+          //autoHideDuration={6000}
+          anchorOrigin={{vertical: 'center', horizontal: 'center'}}
+        >
+          <Alert o severity="success">
+            Wait for your collectible to mint!
+          </Alert>
+        </Snackbar>
         <Grid container className={classes.grid} spacing={2}>
           <Grid item xs={12}>
             <Grid container justify="center" spacing={2}>

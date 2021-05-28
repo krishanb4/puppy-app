@@ -1,8 +1,17 @@
 import {ethers} from 'ethers';
-import {minterAddress, puppyAddress} from '../constants/constants';
+import {
+  minterAddress,
+  puppyAddress,
+  storageAddress,
+  collectionAddress,
+  nftSaleAddress,
+  collectibles,
+} from '../constants/constants';
 
 const puppyABI = require('../abis/bep20.json');
 const minterABI = require('../abis/minter.json');
+const collectionABI = require('../abis/bep1155.json');
+const nftSaleABI = require('../abis/nftSale.json');
 const dataseed = new ethers.providers.JsonRpcBatchProvider(
   'https://bsc-dataseed.binance.org/'
 );
@@ -88,6 +97,35 @@ async function puppyBalance(account) {
     return [0, 0];
   }
 }
+async function nftBalance(account) {
+  const final = 7;
+  const balances = [];
+  try {
+    const contract = new ethers.Contract(
+      collectionAddress,
+      collectionABI,
+      dataseed
+    );
+    for (var i = 1; i <= final; i++) {
+      var balance = await contract.balanceOf(account, i);
+      if (i == 7) {
+        balance = 1;
+      }
+      var collectible = collectibles.filter(function (element) {
+        if (element.id == i) return true;
+      });
+      console.log(balance);
+      if (Number(balance) > 0) {
+        collectible = collectible[0];
+        collectible.balance = Number(balance);
+        balances.push(collectible);
+      }
+    }
+  } catch (e) {
+    //console.log(e);
+  }
+  return balances;
+}
 
 async function aquiredNFTs(account) {
   const claimed = {
@@ -108,11 +146,32 @@ async function aquiredNFTs(account) {
   return claimed;
 }
 
+async function nftSale(tokenId) {
+  const saleContract = new ethers.Contract(
+    nftSaleAddress,
+    nftSaleABI,
+    dataseed
+  );
+  const sale = await saleContract.sales(tokenId);
+  console.log(sale);
+  return sale;
+}
+
 async function mint(tokenId) {
   const signer = window.provider.getSigner();
   const minter = new ethers.Contract(minterAddress, minterABI, signer);
   const tx = await minter.mintLevel(tokenId, ethers.constants.HashZero, {
     gasLimit: 30000,
+  });
+  //console.log(tx.hash);
+  return tx.hash;
+}
+async function buyNFT(tokenId, price) {
+  const signer = window.provider.getSigner();
+  const saleContract = new ethers.Contract(nftSaleAddress, nftSaleABI, signer);
+  const tx = await saleContract.buy(tokenId, {
+    gasLimit: 30000,
+    value: ethers.utils.parseEther(`${price}`),
   });
   //console.log(tx.hash);
   return tx.hash;
@@ -139,10 +198,13 @@ export {
   connect,
   checkBalance,
   puppyBalance,
+  nftBalance,
   aquiredNFTs,
   waitForTx,
   toAddress,
   signMessage,
   recoverSign,
   ensureConnection,
+  buyNFT,
+  nftSale,
 };

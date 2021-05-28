@@ -30,16 +30,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {"internalType": "uint256", "name": "", "type": "uint256"},
-      {"internalType": "address", "name": "", "type": "address"}
-    ],
-    "name": "claimed",
-    "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "collection",
     "outputs": [{"internalType": "address", "name": "", "type": "address"}],
@@ -60,43 +50,8 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "lvl1",
-    "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "lvl2",
-    "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "lvl3",
-    "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "lvl4",
-    "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "lvl5",
-    "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "lvl6",
+    "inputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+    "name": "levels",
     "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
     "stateMutability": "view",
     "type": "function"
@@ -109,13 +64,6 @@
     "name": "mintLevel",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
-    "name": "minted",
-    "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -153,6 +101,13 @@
   },
   {
     "inputs": [],
+    "name": "puppystorage",
+    "outputs": [{"internalType": "address", "name": "", "type": "address"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -184,6 +139,15 @@
       {"internalType": "uint256", "name": "_lvl6", "type": "uint256"}
     ],
     "name": "setLevel",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"internalType": "address", "name": "_address", "type": "address"}
+    ],
+    "name": "setPuupyStorage",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
