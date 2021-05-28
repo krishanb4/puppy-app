@@ -108,9 +108,7 @@ async function nftBalance(account) {
     );
     for (var i = 1; i <= final; i++) {
       var balance = await contract.balanceOf(account, i);
-      if (i == 7) {
-        balance = 1;
-      }
+
       var collectible = collectibles.filter(function (element) {
         if (element.id == i) return true;
       });
