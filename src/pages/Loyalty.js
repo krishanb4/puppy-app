@@ -31,9 +31,11 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 const useStyles = (theme) => ({
+  root: {padding: 30},
   grid: {
     flexGrow: 1,
   },
+  gridSpace: {marginRight: 200},
   button: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     border: 0,
@@ -43,6 +45,7 @@ const useStyles = (theme) => ({
     height: 48,
     padding: '0 30px',
     marginTop: 10,
+    marginBottom: 10,
   },
   card: {
     maxWidth: 345,
@@ -234,6 +237,8 @@ class Loyalty extends React.Component {
           <Grid item xs={12}>
             <Grid container justify="center" spacing={2}>
               {buttons}
+            </Grid>
+            <Grid container justify="center">
               <Card className={classes.card}>
                 <CardMedia
                   component="img"
