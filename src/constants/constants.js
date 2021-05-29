@@ -54,7 +54,7 @@ const collectibles = [
     name: 'Skippy',
     id: 7,
     description:
-      'This is Skippy.  A friend of our Puppy, representing a rare  NFT brings out by our platform. Skippy is a entry level NFT and will be bringing more exciting NFTs soon on our Marketplace. Be ready !!!',
+      'This is Skippy. A friend of our Puppy, representing a rare  NFT brings out by our platform. Skippy is a entry level NFT and will be bringing more exciting NFTs soon on our Marketplace. Be ready!!!',
     image:
       'https://gateway.pinata.cloud/ipfs/QmSkSxa8NNL9ZYaE5Wg2GZ2UjV7SuJbusd2ussrbKCwcwA/Skippy/Skippy.jpg',
     thumbnail:
