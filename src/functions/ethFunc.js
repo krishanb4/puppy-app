@@ -64,7 +64,9 @@ function handleAccountsChanged(accounts) {
 
 async function checkBalance(account) {
   try {
-    const balance = await dataseed.getBalance(account);
+    var balance = await dataseed.getBalance(account);
+    balance = account == ethers.constants.AddressZero ? 0 : balance;
+
     return balance;
   } catch (e) {
     return 0;
@@ -77,6 +79,7 @@ async function puppyBalance(account) {
     const contract = new ethers.Contract(puppyAddress, puppyABI, dataseed);
     var balance = await contract.balanceOf(account);
     balance = Number(balance) / 10 ** 18;
+    balance = account == ethers.constants.AddressZero ? 0 : balance;
 
     if (balance > 50000) {
       level = 6;
