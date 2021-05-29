@@ -116,7 +116,7 @@ class Sales extends React.Component {
       nft_sale: {
         name: collectibles[0].name,
         id: collectibles[0].id,
-        image: collectibles[0].image,
+        image: collectibles[0].thumbnail,
         user_filled: 0,
         price: 0,
         on_sale: collectibles[0].initial_sale,
