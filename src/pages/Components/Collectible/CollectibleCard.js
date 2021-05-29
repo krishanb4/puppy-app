@@ -46,7 +46,8 @@ export default function ImgMediaCard(props) {
               component="h2"
               color="textSecondary"
             >
-              {collectible.name}
+              {collectible.name} ({collectible.balance || collectible.total} of{' '}
+              {collectible.total})
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               {collectible.description}

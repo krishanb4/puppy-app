@@ -73,6 +73,14 @@ const useStyles = (theme) => ({
     marginLeft: 50,
     borderRadius: 30,
   },
+  overlay: {
+    position: 'relative',
+    top: '50px',
+    right: '15px',
+    color: 'white',
+    backgroundColor: 'transparent',
+    textAlign: 'right',
+  },
 });
 const BorderLinearProgress = withStyles((theme) => ({
   root: {
@@ -222,6 +230,7 @@ class Sales extends React.Component {
                   image={this.state.nft_sale.image}
                   title=""
                 />
+
                 <CardContent>
                   <Typography variant="h4" className={classes.text}>
                     {this.state.nft_sale.name}
