@@ -351,8 +351,8 @@ class Profile extends React.Component {
                       <p className="text-secondary mb-1">
                         {profile.address.substring(0, 10) + '...'}
                       </p>
-                      {proButton}
                     </div>
+                    {proButton}
                   </div>
                 </Card.Body>
               </Card>

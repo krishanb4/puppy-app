@@ -251,7 +251,7 @@ class Sales extends React.Component {
                     className={classes.button}
                     size="large"
                     color="primary"
-                    //onClick={buyCollectible}
+                    onClick={buyCollectible}
                     disabled={
                       this.state.bought_nft_sale || this.state.buying_nft_sale
                     }

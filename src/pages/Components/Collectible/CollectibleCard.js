@@ -36,7 +36,7 @@ export default function ImgMediaCard(props) {
           <CardMedia
             component="img"
             alt=""
-            image={collectible.image}
+            image={collectible.thumbnail}
             title=""
           />
           <CardContent>
